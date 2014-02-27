@@ -80,6 +80,9 @@
   'Return':
     'prefix': 're'
     'body': 'return '
+  'Sealed':
+    'prefix': 'se'
+    'body': 'sealed '
   'Static':
     'prefix': 'st'
     'body': 'static '
