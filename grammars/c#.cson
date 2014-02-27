@@ -1,0 +1,470 @@
+'fileTypes': [
+  'cs'
+]
+'foldingStartMarker': '^\\s*#\\s*region|^\\s*/\\*|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))'
+'foldingStopMarker': '^\\s*#\\s*endregion|^\\s*\\*/|^\\s*\\}'
+'name': 'C#'
+'patterns': [
+  {
+    'captures':
+      '1':
+        'name': 'keyword.other.using.source.cs'
+    'match': '^\\s*(using)\\s+([^ ;]*);'
+    'name': 'meta.keyword.using.source.cs'
+  }
+  {
+    'begin': '^\\s*((namespace)\\s+([\\w.]+))'
+    'beginCaptures':
+      '1':
+        'name': 'meta.namespace.identifier.source.cs'
+      '2':
+        'name': 'keyword.other.namespace.source.cs'
+      '3':
+        'name': 'entity.name.type.namespace.source.cs'
+    'end': '}'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.section.namespace.end.source.cs'
+    'name': 'meta.namespace.source.cs'
+    'patterns': [
+      {
+        'begin': '{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.section.namespace.begin.source.cs'
+        'end': '(?=})'
+        'name': 'meta.namespace.body.source.cs'
+        'patterns': [
+          {
+            'include': '#code'
+          }
+        ]
+      }
+    ]
+  }
+  {
+    'include': '#code'
+  }
+]
+'repository':
+  'block':
+    'patterns': [
+      {
+        'begin': '{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.section.block.begin.source.cs'
+        'end': '}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.section.block.end.source.cs'
+        'name': 'meta.block.source.cs'
+        'patterns': [
+          {
+            'include': '#code'
+          }
+        ]
+      }
+    ]
+  'builtinTypes':
+    'patterns': [
+      {
+        'match': '\\b(bool|byte|sbyte|char|decimal|double|float|int|uint|long|ulong|object|short|ushort|string|void|class|struct|enum|interface)\\b'
+        'name': 'storage.type.source.cs'
+      }
+    ]
+  'class':
+    'begin': '(?=\\w?[\\w\\s]*(?:class|struct|interface|enum)\\s+\\w+)'
+    'end': '}'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.section.class.end.source.cs'
+    'name': 'meta.class.source.cs'
+    'patterns': [
+      {
+        'include': '#storage-modifiers'
+      }
+      {
+        'include': '#comments'
+      }
+      {
+        'captures':
+          '1':
+            'name': 'storage.modifier.source.cs'
+          '2':
+            'name': 'entity.name.type.class.source.cs'
+        'match': '(class|struct|interface|enum)\\s+(\\w+)'
+        'name': 'meta.class.identifier.source.cs'
+      }
+      {
+        'begin': ':'
+        'end': '(?={)'
+        'patterns': [
+          {
+            'captures':
+              '1':
+                'name': 'storage.type.source.cs'
+            'match': '\\s*,?([A-Za-z_]\\w*)\\b'
+          }
+        ]
+      }
+      {
+        'begin': '{'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.section.class.begin.source.cs'
+        'end': '(?=})'
+        'name': 'meta.class.body.source.cs'
+        'patterns': [
+          {
+            'include': '#method'
+          }
+          {
+            'include': '#code'
+          }
+        ]
+      }
+    ]
+  'code':
+    'patterns': [
+      {
+        'include': '#block'
+      }
+      {
+        'include': '#comments'
+      }
+      {
+        'include': '#class'
+      }
+      {
+        'include': '#constants'
+      }
+      {
+        'include': '#storage-modifiers'
+      }
+      {
+        'include': '#keywords'
+      }
+      {
+        'include': '#preprocessor'
+      }
+      {
+        'include': '#method-call'
+      }
+      {
+        'include': '#builtinTypes'
+      }
+      {
+        'include': '#documentation'
+      }
+    ]
+  'comments':
+    'patterns': [
+      {
+        'begin': '///'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.comment.source.cs'
+        'end': '$\\n?'
+        'name': 'comment.block.documentation.source.cs'
+        'patterns': [
+          {
+            'include': 'text.xml'
+          }
+        ]
+      }
+      {
+        'begin': '/\\*'
+        'captures':
+          '0':
+            'name': 'punctuation.definition.comment.source.cs'
+        'end': '\\*/\\n?'
+        'name': 'comment.block.source.cs'
+      }
+      {
+        'begin': '//'
+        'captures':
+          '1':
+            'name': 'punctuation.definition.comment.source.cs'
+        'end': '$\\n?'
+        'name': 'comment.line.double-slash.source.cs'
+      }
+    ]
+  'constants':
+    'patterns': [
+      {
+        'match': '\\b(true|false|null|this|base)\\b'
+        'name': 'constant.language.source.cs'
+      }
+      {
+        'match': '\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\\b'
+        'name': 'constant.numeric.source.cs'
+      }
+      {
+        'captures':
+          '0':
+            'name': 'punctuation.definition.string.begin.source.cs'
+        'match': '@"([^"]|"")*"'
+        'name': 'string.quoted.double.literal.source.cs'
+      }
+      {
+        'begin': '"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.source.cs'
+        'end': '"'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.source.cs'
+        'name': 'string.quoted.double.source.cs'
+        'patterns': [
+          {
+            'match': '\\\\.'
+            'name': 'constant.character.escape.source.cs'
+          }
+        ]
+      }
+      {
+        'begin': '\''
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.source.cs'
+        'end': '\''
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.source.cs'
+        'name': 'string.quoted.single.source.cs'
+        'patterns': [
+          {
+            'match': '\\\\.'
+            'name': 'constant.character.escape.source.cs'
+          }
+        ]
+      }
+    ]
+  'keywords':
+    'patterns': [
+      {
+        'match': '\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield)\\b'
+        'name': 'keyword.control.source.cs'
+      }
+      {
+        'match': '\\b(from|where|select|group|into|orderby|join|let|on|equals|by|ascending|descending)\\b'
+        'name': 'keyword.linq.source.cs'
+      }
+      {
+        'match': '\\b(new|is|as|using|checked|unchecked|typeof|sizeof|override|readonly|stackalloc)\\b'
+        'name': 'keyword.operator.source.cs'
+      }
+      {
+        'match': '\\b(var|event|delegate|add|remove|set|get|value)\\b'
+        'name': 'keyword.other.source.cs'
+      }
+    ]
+  'method':
+    'patterns': [
+      {
+        'begin': '\\['
+        'end': '\\]'
+        'name': 'meta.method.annotation.source.cs'
+        'patterns': [
+          {
+            'include': '#constants'
+          }
+          {
+            'include': '#preprocessor'
+          }
+          {
+            'include': '#builtinTypes'
+          }
+        ]
+      }
+      {
+        'begin': '(?=\\bnew\\s+)(?=[\\w<].*\\s+)(?=[^=]+\\()'
+        'end': '(?={|;)'
+        'name': 'meta.new-object.source.cs'
+        'patterns': [
+          {
+            'include': '#code'
+          }
+        ]
+      }
+      {
+        'begin': '(?!new)(?=[\\w<].*\\s+)(?=[^=]+\\()'
+        'end': '(})|(?=;)'
+        'endCaptures':
+          '1':
+            'name': 'punctuation.section.method.end.source.cs'
+        'name': 'meta.method.source.cs'
+        'patterns': [
+          {
+            'include': '#storage-modifiers'
+          }
+          {
+            'begin': '([\\w.]+)\\s*\\('
+            'beginCaptures':
+              '1':
+                'name': 'entity.name.function.source.cs'
+            'end': '\\)'
+            'name': 'meta.method.identifier.source.cs'
+            'patterns': [
+              {
+                'include': '#parameters'
+              }
+            ]
+          }
+          {
+            'begin': '(?=\\w.*\\s+[\\w.]+\\s*\\()'
+            'end': '(?=[\\w.]+\\s*\\()'
+            'name': 'meta.method.return-type.source.cs'
+            'patterns': [
+              {
+                'include': '#builtinTypes'
+              }
+            ]
+          }
+          {
+            'begin': ':\\s*(this|base)\\s*\\('
+            'beginCaptures':
+              '1':
+                'name': 'constant.language.source.cs'
+            'end': '\\)'
+            'name': 'meta.method.base-call.source.cs'
+            'patterns': [
+              {
+                'include': '#builtinTypes'
+              }
+            ]
+          }
+          {
+            'begin': '{'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.section.method.begin.source.cs'
+            'end': '(?=})'
+            'name': 'meta.method.body.source.cs'
+            'patterns': [
+              {
+                'include': '#code'
+              }
+            ]
+          }
+        ]
+      }
+      {
+        'begin': '(?!new)(?=[\\w<].*\\s+)(?=[^=]+\\{)'
+        'end': '}'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.section.property.end.source.cs'
+        'name': 'meta.property.source.cs'
+        'patterns': [
+          {
+            'include': '#storage-modifiers'
+          }
+          {
+            'begin': '([\\w.]+)\\s*(?={)'
+            'captures':
+              '1':
+                'name': 'entity.name.function.source.cs'
+            'end': '(?={)'
+            'name': 'meta.method.identifier.source.cs'
+          }
+          {
+            'begin': '(?=\\w.*\\s+[\\w.]+\\s*\\{)'
+            'end': '(?=[\\w.]+\\s*\\{)'
+            'name': 'meta.method.return-type.source.cs'
+            'patterns': [
+              {
+                'include': '#builtinTypes'
+              }
+            ]
+          }
+          {
+            'begin': '{'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.section.property.begin.source.cs'
+            'end': '(?=})'
+            'name': 'meta.method.body.source.cs'
+            'patterns': [
+              {
+                'include': '#code'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  'method-call':
+    'begin': '([\\w$]+)(\\()'
+    'beginCaptures':
+      '1':
+        'name': 'meta.method.source.cs'
+      '2':
+        'name': 'punctuation.definition.method-parameters.begin.source.cs'
+    'end': '\\)'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.method-parameters.end.source.cs'
+    'name': 'meta.method-call.source.cs'
+    'patterns': [
+      {
+        'match': ','
+        'name': 'punctuation.definition.seperator.parameter.source.cs'
+      }
+      {
+        'include': '#code'
+      }
+    ]
+  'parameters':
+    'begin': '\\b(ref|params|out)?\\s*\\b([\\w.\\[\\]]+)\\s+(\\w+)\\s*(=)?'
+    'beginCaptures':
+      '1':
+        'name': 'storage.type.modifier.source.cs'
+      '2':
+        'name': 'storage.type.generic.source.cs'
+      '3':
+        'name': 'variable.parameter.function.source.cs'
+      '4':
+        'name': 'keyword.operator.assignment.source.cs'
+    'end': '(?:(,)|(?=[\\)]))'
+    'endCaptures':
+      '1':
+        'name': 'punctuation.definition.separator.parameter.source.cs'
+    'patterns': [
+      {
+        'include': '#constants'
+      }
+      {
+        'include': '#block'
+      }
+    ]
+  'preprocessor':
+    'patterns': [
+      {
+        'captures':
+          '2':
+            'name': 'meta.toc-list.region.source.cs'
+        'match': '^\\s*#\\s*(region)\\b(.*)$'
+        'name': 'meta.preprocessor.source.cs'
+      }
+      {
+        'captures':
+          '2':
+            'name': 'entity.name.function.preprocessor.source.cs'
+        'match': '^\\s*#\\s*(define)\\b\\s*(\\S*)'
+        'name': 'meta.preprocessor.source.cs'
+      }
+      {
+        'captures':
+          '2':
+            'name': 'keyword.control.import.source.cs'
+        'match': '^\\s*#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion)\\b'
+        'name': 'meta.preprocessor.source.cs'
+      }
+    ]
+  'storage-modifiers':
+    'match': '\\b(event|delegate|internal|public|protected|private|static|const|new|sealed|abstract|virtual|override|extern|unsafe|readonly|volatile|implicit|explicit|operator)\\b'
+    'name': 'storage.modifier.source.cs'
+'scopeName': 'source.cs'
