@@ -87,7 +87,7 @@
     'prefix': 'st'
     'body': 'static '
   'Struct':
-    'prefix': 'st'
+    'prefix': 'su'
     'body': 'struct $1\n{\n\t$0\n}'
   'Switch':
     'prefix': 'sw'
