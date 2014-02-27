@@ -35,9 +35,6 @@
   'Enumeration':
     'prefix': 'enum'
     'body': 'enum $1\n{\n\t$0\n}'
-  'Final':
-    'prefix': 'fi'
-    'body': 'final '
   'Finally':
     'prefix': 'fy'
     'body': 'finally {\n\t$0\n}'
