@@ -9,7 +9,8 @@
     'captures':
       '1':
         'name': 'keyword.other.using.source.cs'
-    'match': '^\\s*(using)\\s+([^ ;]*);'
+    'begin': '^\\s*(using)\b\s*'
+    'end': '\\s*(?:$|(;))'
     'name': 'meta.keyword.using.source.cs'
   }
   {
