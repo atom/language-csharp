@@ -1,0 +1,10 @@
+'fileTypes': [
+  'csx'
+]
+'name': 'C# Script File'
+'patterns': [
+  {
+    'include': 'source.cs'
+  }
+]
+'scopeName': 'source.csx'
