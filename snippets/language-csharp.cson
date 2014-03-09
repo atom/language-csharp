@@ -2,6 +2,15 @@
   'Abstract':
     'prefix': 'ab'
     'body': 'abstract '
+  'Async Task':
+    'prefix': 'at'
+    'body': 'async Task<${0:T}> ${1:MethodName}($2) {\n\t$3\n}'
+  'Async Void':
+    'prefix': 'av'
+    'body': 'async void ${0:MethodName}($1) {\n\t$2\n}'
+  'Await':
+    'prefix': 'aw'
+    'body': 'await '
   'Break':
     'prefix': 'br'
     'body': 'break;\n'
@@ -35,9 +44,6 @@
   'Enumeration':
     'prefix': 'enum'
     'body': 'enum $1\n{\n\t$0\n}'
-  'Final':
-    'prefix': 'fi'
-    'body': 'final '
   'Finally':
     'prefix': 'fy'
     'body': 'finally {\n\t$0\n}'
@@ -83,11 +89,14 @@
   'Return':
     'prefix': 're'
     'body': 'return '
+  'Sealed':
+    'prefix': 'se'
+    'body': 'sealed '
   'Static':
     'prefix': 'st'
     'body': 'static '
   'Struct':
-    'prefix': 'st'
+    'prefix': 'su'
     'body': 'struct $1\n{\n\t$0\n}'
   'Switch':
     'prefix': 'sw'
