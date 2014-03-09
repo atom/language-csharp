@@ -4,10 +4,10 @@
     'body': 'abstract '
   'Async Task':
     'prefix': 'at'
-    'body': 'async Task<${0:return type}> ${1:method name}($2) {\n\t$3\n}'
+    'body': 'async Task<${0:T}> ${1:MethodName}($2) {\n\t$3\n}'
   'Async Void':
     'prefix': 'av'
-    'body': 'async void ${0:method name}($1) {\n\t$2\n}'
+    'body': 'async void ${0:MethodName}($1) {\n\t$2\n}'
   'Await':
     'prefix': 'aw'
     'body': 'await '
