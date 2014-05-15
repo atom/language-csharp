@@ -466,6 +466,6 @@
       }
     ]
   'storage-modifiers':
-    'match': '\\b(event|delegate|internal|public|protected|private|static|const|new|sealed|abstract|virtual|override|extern|unsafe|readonly|volatile|implicit|explicit|operator)\\b'
+    'match': '\\b(event|delegate|internal|public|protected|private|static|const|new|sealed|abstract|virtual|override|extern|unsafe|readonly|volatile|implicit|explicit|operator|async)\\b'
     'name': 'storage.modifier.source.cs'
 'scopeName': 'source.cs'
