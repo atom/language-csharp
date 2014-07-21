@@ -1,9 +1,10 @@
+'scopeName': 'source.nant-build'
+'name': 'NAnt Build File'
 'fileTypes': [
   'build'
 ]
 'foldingStartMarker': '<[^!?/>]+|<!--'
 'foldingStopMarker': '/>|</[^?>]+|-->'
-'name': 'NAnt Build File'
 'patterns': [
   {
     'begin': '<!--'
@@ -65,4 +66,3 @@
     'name': 'invalid.illegal.bad-ampersand.nant'
   }
 ]
-'scopeName': 'source.nant-build'

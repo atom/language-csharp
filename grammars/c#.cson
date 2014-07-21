@@ -1,9 +1,10 @@
+'scopeName': 'source.cs'
+'name': 'C#'
 'fileTypes': [
   'cs'
 ]
 'foldingStartMarker': '^\\s*#\\s*region|^\\s*/\\*|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))'
 'foldingStopMarker': '^\\s*#\\s*endregion|^\\s*\\*/|^\\s*\\}'
-'name': 'C#'
 'patterns': [
   {
     'captures':
@@ -468,4 +469,3 @@
   'storage-modifiers':
     'match': '\\b(event|delegate|internal|public|protected|private|static|const|new|sealed|abstract|virtual|override|extern|unsafe|readonly|volatile|implicit|explicit|operator|async|partial)\\b'
     'name': 'storage.modifier.source.cs'
-'scopeName': 'source.cs'

@@ -1,7 +1,8 @@
+'scopeName': 'source.csx'
+'name': 'C# Script File'
 'fileTypes': [
   'csx'
 ]
-'name': 'C# Script File'
 'patterns': [
   {
     'include': 'source.cs'
@@ -11,4 +12,3 @@
     'name': 'preprocessor.source.csx'
   }
 ]
-'scopeName': 'source.csx'
