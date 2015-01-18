@@ -448,7 +448,7 @@
         'captures':
           '2':
             'name': 'meta.toc-list.region.source.cs'
-        'match': '^\\s*#\\s*(region)\\b(.*)$'
+        'match': '^\\s*#\\s*(region)\\b\\s*([^\/]+)\\s'
         'name': 'meta.preprocessor.source.cs'
       }
       {
@@ -459,7 +459,7 @@
         'name': 'meta.preprocessor.source.cs'
       }
       {
-        'match': '^\\s*#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion)\\b'
+        'match': '^\\s*#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion)\\b\\s*([^\/]+)\\s'
         'name': 'meta.preprocessor.source.cs'
       }
     ]
