@@ -459,9 +459,6 @@
         'name': 'meta.preprocessor.source.cs'
       }
       {
-        'captures':
-          '2':
-            'name': 'keyword.control.import.source.cs'
         'match': '^\\s*#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion)\\b'
         'name': 'meta.preprocessor.source.cs'
       }
