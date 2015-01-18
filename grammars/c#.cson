@@ -247,7 +247,7 @@
   'keywords':
     'patterns': [
       {
-        'match': '\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield)\\b'
+        'match': '\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await)\\b'
         'name': 'keyword.control.source.cs'
       }
       {
