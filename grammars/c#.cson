@@ -455,7 +455,7 @@
         'captures':
           '2':
             'name': 'entity.name.function.preprocessor.source.cs'
-        'match': '^\\s*#\\s*(define)\\b\\s*(\\S*)'
+        'match': '^\\s*#\\s*(define|undef|if|elif)\\b\\s*(\\S*)'
         'name': 'meta.preprocessor.source.cs'
       }
       {
