@@ -247,7 +247,7 @@
   'keywords':
     'patterns': [
       {
-        'match': '\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield)\\b'
+        'match': '\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await)\\b'
         'name': 'keyword.control.source.cs'
       }
       {
@@ -448,21 +448,18 @@
         'captures':
           '2':
             'name': 'meta.toc-list.region.source.cs'
-        'match': '^\\s*#\\s*(region)\\b(.*)$'
+        'match': '^\\s*#\\s*(region)\\b\\s*([^\/]+)\\s'
         'name': 'meta.preprocessor.source.cs'
       }
       {
         'captures':
           '2':
             'name': 'entity.name.function.preprocessor.source.cs'
-        'match': '^\\s*#\\s*(define)\\b\\s*(\\S*)'
+        'match': '^\\s*#\\s*(define|undef|if|elif)\\b\\s*(\\S*)'
         'name': 'meta.preprocessor.source.cs'
       }
       {
-        'captures':
-          '2':
-            'name': 'keyword.control.import.source.cs'
-        'match': '^\\s*#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion)\\b'
+        'match': '^\\s*#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion)\\b\\s*([^\/]+)\\s'
         'name': 'meta.preprocessor.source.cs'
       }
     ]
