@@ -122,9 +122,6 @@
   'While':
     'prefix': 'wh'
     'body': 'while (${1:Condition}) {\n\t$0\n}'
-  'Write':
-    'prefix': 'w'
-    'body': 'Console.Write($1);$0'
   'WriteLine':
-    'prefix': 'wl'
+    'prefix': 'cw'
     'body': 'Console.WriteLine($1);$0'
