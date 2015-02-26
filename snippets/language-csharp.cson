@@ -109,7 +109,7 @@
     'body': 'throw $0'
   'Try':
     'prefix': 'tr'
-    'body': 'try {\n\t$0\n}'
+    'body': 'try\n{\n\t$0\n}'
   'Using':
     'prefix': 'us'
     'body': 'using ${1:System};$0'
@@ -121,7 +121,7 @@
     'body': 'virtual '
   'While':
     'prefix': 'wh'
-    'body': 'while (${1:Condition})\n{\n\t$0\n}'
+    'body': 'while (${1:Condition})\n{\n\t$2\n}'
   'Write':
     'prefix': 'w'
     'body': 'Console.Write($1);$0'
