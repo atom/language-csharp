@@ -121,7 +121,7 @@
     'body': 'virtual '
   'While':
     'prefix': 'wh'
-    'body': 'while (${1:Condition})\n{\n\t$2\n}'
+    'body': 'while (${1:Condition})\n{\n\t$0\n}'
   'Write':
     'prefix': 'w'
     'body': 'Console.Write($1);$0'
