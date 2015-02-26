@@ -76,7 +76,7 @@
     'body': 'private '
   'Property':
     'prefix': 'prop'
-    'body': '${1:string} ${2:PropertyName} { get; set; }'
+    'body': 'public ${1:string} ${2:PropertyName} { get; set; }\n'
   'Protected':
     'prefix': 'po'
     'body': 'protected '
