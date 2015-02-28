@@ -259,7 +259,7 @@
         'name': 'keyword.operator.source.cs'
       }
       {
-        'match': '\\b(var|event|delegate|add|remove|set|get|value)\\b'
+        'match': '\\b(var|event|delegate|fixed|add|remove|set|get|value)\\b'
         'name': 'keyword.other.source.cs'
       }
     ]
