@@ -4,10 +4,10 @@
     'body': 'abstract '
   'Async Task':
     'prefix': 'at'
-    'body': 'async Task<${0:T}> ${1:MethodName}($2) {\n\t$3\n}'
+    'body': 'async Task<${0:T}> ${1:MethodName}($2)\n{\n\t$3\n}'
   'Async Void':
     'prefix': 'av'
-    'body': 'async void ${0:MethodName}($1) {\n\t$2\n}'
+    'body': 'async void ${0:MethodName}($1)\n{\n\t$2\n}'
   'Await':
     'prefix': 'aw'
     'body': 'await '
@@ -19,10 +19,10 @@
     'body': 'case ${1:Condition}:\n\t$2\n$0'
   'Catch':
     'prefix': 'ca'
-    'body': 'catch (${1:Exception} ${2:e}) {\n\t$0\n}'
+    'body': 'catch (${1:Exception} ${2:e})\n{\n\t$0\n}'
   'Class':
     'prefix': 'cl'
-    'body': 'class $1\n{\n\t$0\n}'
+    'body': '${1:public} class $2\n{\n\t$0\n}'
   'Constant String':
     'prefix': 'cos'
     'body': 'public const string ${1:Var} = $2;$0'
@@ -49,13 +49,13 @@
     'body': 'finally {\n\t$0\n}'
   'For':
     'prefix': 'for'
-    'body': 'for (${1:Initializer}; ${2:Condition}; ${3:Update}) {\n\t$0\n}'
+    'body': 'for (${1:Initializer}; ${2:Condition}; ${3:Update})\n{\n\t$0\n}'
   'For Each':
     'prefix': 'fore'
-    'body': 'foreach (${1:Type} in ${2:Collection}) {\n\t$0\n}'
+    'body': 'foreach (${1:Type} in ${2:Collection})\n{\n\t$0\n}'
   'If                             ':
     'prefix': 'if'
-    'body': 'if (${1:Condition}) {\n\t$0\n}'
+    'body': 'if (${1:Condition})\n{\n\t$0\n}'
   'Interface':
     'prefix': 'in'
     'body': 'interface $1\n{\n\t$0\n}'
@@ -76,7 +76,7 @@
     'body': 'private '
   'Property':
     'prefix': 'prop'
-    'body': '${1:string} ${2:PropertyName} { get; set; }'
+    'body': 'public ${1:string} ${2:PropertyName} { get; set; }\n'
   'Protected':
     'prefix': 'po'
     'body': 'protected '
@@ -100,7 +100,7 @@
     'body': 'struct $1\n{\n\t$0\n}'
   'Switch':
     'prefix': 'sw'
-    'body': 'switch (${1:Expression}) {\n\t$0\n}'
+    'body': 'switch (${1:Expression})\n{\n\t$0\n}'
   'Throw New':
     'prefix': 'tn'
     'body': 'throw new $0'
@@ -109,7 +109,7 @@
     'body': 'throw $0'
   'Try':
     'prefix': 'tr'
-    'body': 'try {\n\t$0\n}'
+    'body': 'try\n{\n\t$0\n}'
   'Using':
     'prefix': 'us'
     'body': 'using ${1:System};$0'
@@ -121,10 +121,13 @@
     'body': 'virtual '
   'While':
     'prefix': 'wh'
-    'body': 'while (${1:Condition}) {\n\t$0\n}'
+    'body': 'while (${1:Condition})\n{\n\t$0\n}'
   'Write':
     'prefix': 'w'
     'body': 'Console.Write($1);$0'
   'WriteLine':
     'prefix': 'wl'
     'body': 'Console.WriteLine($1);$0'
+  'Constructor':
+    'prefix': 'ctor'
+    'body': 'public ${1:name}($2)\n{\n\t$3\n}'
