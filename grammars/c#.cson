@@ -262,6 +262,12 @@
         'match': '\\b(var|event|delegate|fixed|add|remove|set|get|value)\\b'
         'name': 'keyword.other.source.cs'
       }
+      {
+        'match': '[@]\\b(var|event|delegate|add|remove|set|get|value|new|is|as|using|checked|unchecked|typeof|sizeof
+        |override|readonly|stackalloc|from|where|select|group|into|orderby|join|let|on|equals|by|ascending|descending
+        |if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await)\\b'
+        'name': 'meta.class.body.source.cs'
+      }
     ]
   'method':
     'patterns': [
