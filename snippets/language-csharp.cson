@@ -47,6 +47,9 @@
   'Finally':
     'prefix': 'fy'
     'body': 'finally {\n\t$0\n}'
+  'Fixed':
+    'prefix': 'fi'
+    'body': 'fixed (${1:Expression}) {\n\t$0\n}'
   'For':
     'prefix': 'for'
     'body': 'for (${1:Initializer}; ${2:Condition}; ${3:Update}) {\n\t$0\n}'
