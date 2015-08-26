@@ -16,11 +16,11 @@ describe "Language C# package", ->
       expect(grammar.scopeName).toBe "source.cs"
 
     it "tokenizes strings in method calls", ->
-      tokens = grammar.tokenizeLines("""
+      tokens = grammar.tokenizeLines """
         class F {
           a = C("1.1 10\\n");
         })
-      """)
+      """
 
       expect(tokens[1][1]).toEqual value: 'C', scopes: ['source.cs', 'meta.class.source.cs', 'meta.class.body.source.cs', 'meta.method-call.source.cs', 'meta.method.source.cs']
       expect(tokens[1][2]).toEqual value: '(', scopes: ['source.cs', 'meta.class.source.cs', 'meta.class.body.source.cs', 'meta.method-call.source.cs', 'punctuation.definition.method-parameters.begin.source.cs']
