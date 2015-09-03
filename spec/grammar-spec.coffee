@@ -30,7 +30,6 @@ describe "Language C# package", ->
       expect(tokens[1][6]).toEqual value: '"', scopes: ['source.cs', 'meta.class.source.cs', 'meta.class.body.source.cs', 'meta.method-call.source.cs', 'string.quoted.double.source.cs', 'punctuation.definition.string.end.source.cs']
       expect(tokens[1][7]).toEqual value: ')', scopes: ['source.cs', 'meta.class.source.cs', 'meta.class.body.source.cs', 'meta.method-call.source.cs', 'punctuation.definition.method-parameters.end.source.cs']
 
-
   describe "C# Script grammar", ->
     it "parses the grammar", ->
       grammar = atom.grammars.grammarForScopeName("source.csx")
