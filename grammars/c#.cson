@@ -259,8 +259,12 @@
         'name': 'keyword.operator.source.cs'
       }
       {
-        'match': '\\b(var|event|delegate|fixed|add|remove|set|get|value)\\b'
+        'match': '\\b(event|delegate|fixed|add|remove|set|get|value)\\b'
         'name': 'keyword.other.source.cs'
+      }
+      {
+        'match': '\\b(var)\\b'
+        'name': 'storage.type.var.source.cs'
       }
       {
         'match': '[@]\\b(var|event|delegate|add|remove|set|get|value|new|is|as|using|checked|unchecked|typeof|sizeof
