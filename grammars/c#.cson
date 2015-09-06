@@ -302,7 +302,7 @@
         ]
       }
       {
-        'begin': '(?!new)(?=[\\w<].*\\s+)(?=[^=]+\\()'
+        'begin': '(?!new)(?!.*(=|\\/\\/|\\/\\*).*\\()(?=[\\w<].*\\s+.+\\()'
         'end': '(})|(?=;)'
         'endCaptures':
           '1':
@@ -409,7 +409,7 @@
       }
     ]
   'method-call':
-    'begin': '([\\w$]+)(\\()'
+    'begin': '([\\w$]+)\\s*(\\()'
     'beginCaptures':
       '1':
         'name': 'meta.method.source.cs'
