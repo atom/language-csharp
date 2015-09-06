@@ -405,7 +405,7 @@
       }
     ]
   'method-call':
-    'begin': '([\\w$]+)(\\()'
+    'begin': '([\\w$]+)\\s*(\\()'
     'beginCaptures':
       '1':
         'name': 'meta.method.source.cs'
