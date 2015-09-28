@@ -11,6 +11,10 @@ describe "Language C# package", ->
       runs ->
         grammar = atom.grammars.grammarForScopeName('source.cs')
 
+    it "parses the grammar", ->
+      expect(grammar).toBeDefined()
+      expect(grammar.scopeName).toBe "source.cs"
+
     it "tokenizes variable type followed by comment", ->
       tokens = grammar.tokenizeLines """
       struct hi {
@@ -62,10 +66,6 @@ describe "Language C# package", ->
       expect(tokens[0]).toEqual value: 'func', scopes: ['source.cs', 'meta.method-call.cs', 'meta.method.cs']
       expect(tokens[2]).toEqual value: '(', scopes: ['source.cs', 'meta.method-call.cs', 'punctuation.definition.method-parameters.begin.cs']
 
-    it "parses the grammar", ->
-      expect(grammar).toBeDefined()
-      expect(grammar.scopeName).toBe "source.cs"
-
     it "tokenizes strings in method calls", ->
       tokens = grammar.tokenizeLines """
         class F {
@@ -80,6 +80,34 @@ describe "Language C# package", ->
       expect(tokens[1][5]).toEqual value: '\\n', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs', 'string.quoted.double.cs', 'constant.character.escape.cs']
       expect(tokens[1][6]).toEqual value: '"', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs', 'string.quoted.double.cs', 'punctuation.definition.string.end.cs']
       expect(tokens[1][7]).toEqual value: ')', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs', 'punctuation.definition.method-parameters.end.cs']
+
+    it "tokenizes strings in classes", ->
+      tokens = grammar.tokenizeLines """
+        class a
+        {
+          b = c + "(";
+        }
+      """
+
+      expect(tokens[2][1]).toEqual value: '"', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'string.quoted.double.cs', 'punctuation.definition.string.begin.cs']
+      expect(tokens[2][2]).toEqual value: '(', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'string.quoted.double.cs']
+      expect(tokens[2][3]).toEqual value: '"', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'string.quoted.double.cs', 'punctuation.definition.string.end.cs']
+      expect(tokens[2][4]).toEqual value: ';', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs']
+
+      tokens = grammar.tokenizeLines """
+        class a
+        {
+          b([c(d = "Command e")] string f)
+          {
+          }
+        }
+      """
+
+      expect(tokens[2][7]).toEqual value: '"', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs', 'meta.method-call.cs', 'string.quoted.double.cs', 'punctuation.definition.string.begin.cs']
+      expect(tokens[2][8]).toEqual value: 'Command e', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs', 'meta.method-call.cs', 'string.quoted.double.cs']
+      expect(tokens[2][9]).toEqual value: '"', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs', 'meta.method-call.cs', 'string.quoted.double.cs', 'punctuation.definition.string.end.cs']
+      expect(tokens[2][12]).toEqual value: 'string', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs', 'storage.type.cs']
+      expect(tokens[2][13]).toEqual value: ' f', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs']
 
   describe "C# Script grammar", ->
     it "parses the grammar", ->
