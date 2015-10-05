@@ -302,7 +302,7 @@
         ]
       }
       {
-        'begin': '(?!new)(?!.*(=|\\/\\/|\\/\\*).*\\()(?=[\\w<].*\\s+.+\\()'
+        'begin': '(?<!=|=\\s)(?!new)(?!.*(=|\\/\\/|\\/\\*).*\\()(?=[\\w<].*\\s+.+\\()'
         'end': '(})|(?=;)'
         'endCaptures':
           '1':
@@ -311,6 +311,9 @@
         'patterns': [
           {
             'include': '#storage-modifiers'
+          }
+          {
+            'include': '#builtinTypes'
           }
           {
             'begin': '([\\w.]+)\\s*\\('
@@ -322,6 +325,9 @@
             'patterns': [
               {
                 'include': '#parameters'
+              }
+              {
+                'include': '#constants'
               }
             ]
           }
