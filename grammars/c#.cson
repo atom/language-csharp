@@ -225,30 +225,18 @@
             'name': 'constant.character.escape.cs'
           }
           {
-            'begin': '(?={)'
+            'begin': '{'
             'beginCaptures':
               '0':
-                'name': 'punctuation.definiton.section.embedded.begin.cs'
-            'end': '(?<=})'
+                'name': 'punctuation.definition.section.embedded.begin.cs'
+            'end': '}'
             'endCaptures':
               '0':
                 'name': 'punctuation.definition.section.embedded.end.cs'
-            'name': 'source.cs.embedded.source'
+            'contentName': 'meta.embedded.cs'
             'patterns': [
               {
-                'begin': '{'
-                'beginCaptures':
-                  '0':
-                    'name': 'meta.brace.curly.cs'
-                'end': '}'
-                'endCaptures':
-                  '0':
-                    'name': 'meta.brace.curly.cs'
-                'patterns': [
-                  {
-                    'include': '$self'
-                  }
-                ]
+                'include': '$self'
               }
             ]
           }
