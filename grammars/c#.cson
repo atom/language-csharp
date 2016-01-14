@@ -210,6 +210,47 @@
         'name': 'string.quoted.double.literal.cs'
       }
       {
+        'begin': '$"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.cs'
+        'end': '"'
+          '0':
+            'name': 'punctuation.definition.string.end.cs'
+        'name': 'string.quoted.double.interpolation.cs'
+        'patterns': [
+          {
+            'match': '{{|}}'
+            'name': 'constant.character.escape.cs'
+          }
+          {
+            'begin': '(?={)'
+            'captures':
+              '0':
+                'name': 'punctuation.section.embedded.cs'
+            'end': '(?<=})'
+            'name': 'source.cs.embedded.source'
+            'patterns': [
+              {
+                'begin': '{'
+                'beginCaptures':
+                  '0':
+                    'name': 'meta.brace.curly.cs'
+                'end': '}'
+                'endCaptures':
+                  '0':
+                    'name': 'meta.brace.curly.cs'
+                'patterns': [
+                  {
+                    'include': '$self'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+      {
         'begin': '"'
         'beginCaptures':
           '0':
