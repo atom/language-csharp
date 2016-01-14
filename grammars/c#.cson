@@ -226,10 +226,13 @@
           }
           {
             'begin': '(?={)'
-            'captures':
-              '0':
-                'name': 'punctuation.section.embedded.cs'
+            'beginCaptures':
+              '1':
+                'name': 'punctuation.definiton.section.embedded.begin.cs'
             'end': '(?<=})'
+            'endCaptures':
+              '1':
+                'name': 'punctuation.definition.section.embedded.end.cs'
             'name': 'source.cs.embedded.source'
             'patterns': [
               {
