@@ -215,6 +215,7 @@
           '0':
             'name': 'punctuation.definition.string.begin.cs'
         'end': '"'
+        'endCaptures':
           '0':
             'name': 'punctuation.definition.string.end.cs'
         'name': 'string.quoted.double.interpolation.cs'
