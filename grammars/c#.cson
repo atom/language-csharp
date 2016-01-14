@@ -227,11 +227,11 @@
           {
             'begin': '(?={)'
             'beginCaptures':
-              '1':
+              '0':
                 'name': 'punctuation.definiton.section.embedded.begin.cs'
             'end': '(?<=})'
             'endCaptures':
-              '1':
+              '0':
                 'name': 'punctuation.definition.section.embedded.end.cs'
             'name': 'source.cs.embedded.source'
             'patterns': [

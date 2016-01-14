@@ -113,9 +113,9 @@ describe "Language C# package", ->
       {tokens} = grammar.tokenizeLine '$"I am a {tokenized} string {{yay}}!"'
       expect(tokens[0]).toEqual value: '$"', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'punctuation.definition.string.begin.cs']
       expect(tokens[1]).toEqual value: 'I am a ', scopes: ['source.cs', 'string.quoted.double.interpolation.cs']
-      expect(tokens[2]).toEqual value: '{', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'source.cs.embedded.source', 'punctuation.definition.section.embedded.cs', 'meta.brace.curly.cs']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'source.cs.embedded.source', 'punctuation.definition.section.embedded.begin.cs', 'meta.brace.curly.cs']
       expect(tokens[3]).toEqual value: 'tokenized', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'source.cs.embedded.source']
-      expect(tokens[4]).toEqual value: '}', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'source.cs.embedded.source', 'punctuation.definition.string.embedded.cs', 'meta.brace.curly.cs']
+      expect(tokens[4]).toEqual value: '}', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'source.cs.embedded.source', 'punctuation.definition.string.embedded.end.cs', 'meta.brace.curly.cs']
       expect(tokens[5]).toEqual value: ' string ', scopes: ['source.cs', 'string.quoted.double.interpolation.cs']
       expect(tokens[6]).toEqual value: '{{', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'constant.character.escape.cs']
       expect(tokens[7]).toEqual value: 'yay', scopes: ['source.cs', 'string.quoted.double.interpolation.cs']
