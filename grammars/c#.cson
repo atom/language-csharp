@@ -90,13 +90,19 @@
         'include': '#comments'
       }
       {
-        'captures':
+        'begin': '(class|struct|interface|enum)\\s+(\\w+)(?=[<]?)'
+        'beginCaptures':
           '1':
             'name': 'storage.modifier.cs'
           '2':
             'name': 'entity.name.type.class.cs'
-        'match': '(class|struct|interface|enum)\\s+(\\w+)'
+        'end': '(?=[>:{])'
         'name': 'meta.class.identifier.cs'
+        'patterns': [
+          {
+            'include': '#genericParameters'
+          }
+        ]
       }
       {
         'begin': ':'
@@ -446,7 +452,7 @@
     'begin': '<(in|out)?\\s*\\b([\\w.\\[\\]]+)'
     'beginCaptures':
       '1':
-        'name': 'storage.type.generic.variance.cs'
+        'name': 'keyword.storage.type.generic.variance.cs'
       '2':
         'name': 'storage.type.generic.arg.cs'
     'end': '(?:(,)|(?=[>]))'
