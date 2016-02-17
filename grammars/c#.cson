@@ -449,7 +449,7 @@
       }
     ]
   'genericParameters':
-    'begin': '<(in|out)?\\s*\\b([\\w.\\[\\]]+)'
+    'begin': '\\b(in|out)?\\s*\\b([\\w.\\[\\]]+)'
     'beginCaptures':
       '1':
         'name': 'keyword.storage.type.generic.variance.cs'
