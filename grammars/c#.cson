@@ -247,7 +247,7 @@
   'keywords':
     'patterns': [
       {
-        'match': '\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await)\\b'
+        'match': '\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await|when)\\b'
         'name': 'keyword.control.cs'
       }
       {
@@ -270,7 +270,7 @@
         'match': '[@]\\b(var|event|delegate|add|remove|set|get|value|new|is|as|using|checked|unchecked|typeof|sizeof
         |override|readonly|stackalloc|from|where|select|group|into|orderby|join|let|on|equals|by|ascending|descending
         |if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock
-        |yield|await|nameof)\\b'
+        |yield|await|nameof|when)\\b'
         'name': 'meta.class.body.cs'
       }
     ]
