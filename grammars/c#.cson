@@ -255,7 +255,7 @@
         'name': 'keyword.linq.cs'
       }
       {
-        'match': '\\b(new|is|as|using|checked|unchecked|typeof|sizeof|override|readonly|stackalloc)\\b'
+        'match': '\\b(new|is|as|using|checked|unchecked|typeof|sizeof|override|readonly|stackalloc|nameof)\\b'
         'name': 'keyword.operator.cs'
       }
       {
@@ -269,7 +269,8 @@
       {
         'match': '[@]\\b(var|event|delegate|add|remove|set|get|value|new|is|as|using|checked|unchecked|typeof|sizeof
         |override|readonly|stackalloc|from|where|select|group|into|orderby|join|let|on|equals|by|ascending|descending
-        |if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await)\\b'
+        |if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock
+        |yield|await|nameof)\\b'
         'name': 'meta.class.body.cs'
       }
     ]
