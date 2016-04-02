@@ -71,7 +71,7 @@
   'builtinTypes':
     'patterns': [
       {
-        'match': '\\b(bool|byte|sbyte|char|decimal|double|float|int|uint|long|ulong|object|short|ushort|string|void|class|struct|enum|interface)\\b'
+        'match': '\\b(bool|byte|sbyte|char|decimal|double|float|int|uint|long|ulong|object|short|ushort|string|void|class|struct|enum|interface|dynamic)\\b'
         'name': 'storage.type.cs'
       }
     ]
