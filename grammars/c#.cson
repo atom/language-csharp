@@ -259,7 +259,7 @@
         'name': 'keyword.operator.cs'
       }
       {
-        'match': '\\b(event|delegate|fixed|add|remove|set|get|value)\\b'
+        'match': '\\b(event|delegate|fixed|add|remove|set|get|value|alias|global)\\b'
         'name': 'keyword.other.cs'
       }
       {
@@ -270,7 +270,7 @@
         'match': '[@]\\b(var|event|delegate|add|remove|set|get|value|new|is|as|using|checked|unchecked|typeof|sizeof
         |override|readonly|stackalloc|from|where|select|group|into|orderby|join|let|on|equals|by|ascending|descending
         |if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock
-        |yield|await|nameof|when)\\b'
+        |yield|await|nameof|when|alias|global)\\b'
         'name': 'meta.class.body.cs'
       }
     ]
@@ -481,5 +481,5 @@
       }
     ]
   'storage-modifiers':
-    'match': '\\b(event|delegate|internal|public|protected|private|static|const|new|sealed|abstract|virtual|override|extern|unsafe|readonly|volatile|implicit|explicit|operator|async|partial)\\b'
+    'match': '\\b(event|delegate|internal|public|protected|private|static|const|new|sealed|abstract|virtual|override|extern|unsafe|readonly|volatile|implicit|explicit|operator|async|partial|alias)\\b'
     'name': 'storage.modifier.cs'
