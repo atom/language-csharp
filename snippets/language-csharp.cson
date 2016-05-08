@@ -2,6 +2,9 @@
   'Abstract':
     'prefix': 'ab'
     'body': 'abstract '
+  'Array':
+    'prefix': 'arr'
+    'body': '${0:DataType}[] ${1:VariableName} = {};'
   'Async Task':
     'prefix': 'at'
     'body': 'async Task<${0:T}> ${1:MethodName}($2) {\n\t$3\n}'
@@ -74,6 +77,9 @@
   'Override':
     'prefix': 'over'
     'body': 'override '
+  'Parse':
+    'prefix': 'par'
+    'body': '${0:DataType}.Parse(${1:VariableName});'
   'Private':
     'prefix': 'pr'
     'body': 'private '
@@ -86,6 +92,9 @@
   'Public                       ':
     'prefix': 'pu'
     'body': 'public '
+  'ReadLine':
+    'prefix': 'rl'
+    'body': 'Console.ReadLine();'
   'Region':
     'prefix': 'reg'
     'body': '#region ${1:Region Name}\n\n$0\n\n#endregion\n'
