@@ -7,12 +7,15 @@
 'foldingStopMarker': '^\\s*#\\s*endregion|^\\s*\\*/|^\\s*\\}'
 'patterns': [
   {
-    'captures':
+    'begin': '^\\s*(using)\\b\\s+(static)?\\b\\s*([\\w.]+)'
+    'beginCaptures':
       '1':
         'name': 'keyword.other.using.cs'
-    'begin': '^\\s*(using)\\b\\s*'
+      '2':
+        'name': 'keyword.other.using.cs'
+      '3':
+        'name': 'entity.name.type.namespace.cs'
     'end': '\\s*(?:$|(;))'
-    'name': 'meta.keyword.using.cs'
   }
   {
     'begin': '^\\s*((namespace)\\s+([\\w.]+))'
