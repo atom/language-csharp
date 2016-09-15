@@ -330,6 +330,9 @@
               {
                 'include': '#constants'
               }
+              {
+                'include': '#comments'
+              }
             ]
           }
           {
