@@ -18,40 +18,47 @@
     'end': '\\s*(?:$|(;))'
   }
   {
-    'begin': '^\\s*((namespace)\\s+([\\w.]+))'
-    'beginCaptures':
-      '1':
-        'name': 'meta.namespace.identifier.cs'
-      '2':
-        'name': 'keyword.other.namespace.cs'
-      '3':
-        'name': 'entity.name.type.namespace.cs'
-    'end': '}'
-    'endCaptures':
-      '0':
-        'name': 'punctuation.section.namespace.end.cs'
-    'name': 'meta.namespace.cs'
-    'patterns': [
-      {
-        'begin': '{'
-        'beginCaptures':
-          '0':
-            'name': 'punctuation.section.namespace.begin.cs'
-        'end': '(?=})'
-        'name': 'meta.namespace.body.cs'
-        'patterns': [
-          {
-            'include': '#code'
-          }
-        ]
-      }
-    ]
+    'include': '#namespace'
   }
   {
     'include': '#code'
   }
 ]
 'repository':
+  'namespace':
+    {
+      'begin': '^\\s*((namespace)\\s+([\\w.]+))'
+      'beginCaptures':
+        '1':
+          'name': 'meta.namespace.identifier.cs'
+        '2':
+          'name': 'keyword.other.namespace.cs'
+        '3':
+          'name': 'entity.name.type.namespace.cs'
+      'end': '}'
+      'endCaptures':
+        '0':
+          'name': 'punctuation.section.namespace.end.cs'
+      'name': 'meta.namespace.cs'
+      'patterns': [
+        {
+          'begin': '{'
+          'beginCaptures':
+            '0':
+              'name': 'punctuation.section.namespace.begin.cs'
+          'end': '(?=})'
+          'name': 'meta.namespace.body.cs'
+          'patterns': [
+            {
+              'include': '#namespace'
+            }
+            {
+              'include': '#code'
+            }
+          ]
+        }
+      ]
+    }
   'block':
     'patterns': [
       {
