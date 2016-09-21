@@ -479,20 +479,11 @@
     'patterns': [
       {
         'captures':
-          '2':
-            'name': 'meta.toc-list.region.cs'
-        'match': '^\\s*#\\s*(region)\\b\\s*([^\\/]+)\\s'
-        'name': 'meta.preprocessor.cs'
-      }
-      {
-        'captures':
-          '2':
+          '1':
+            'name': 'directive.preprocessor.cs'
+          '3':
             'name': 'entity.name.function.preprocessor.cs'
-        'match': '^\\s*#\\s*(define|undef|if|elif)\\b\\s*(\\S*)'
-        'name': 'meta.preprocessor.cs'
-      }
-      {
-        'match': '^\\s*#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion)\\b\\s*([^\\/]+)?\\s'
+        'match': '^\\s*(#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion))\\b\\s*(.*?)(?=$|\\/\\/)'
         'name': 'meta.preprocessor.cs'
       }
     ]

@@ -109,6 +109,80 @@ describe "Language C# package", ->
       expect(tokens[2][12]).toEqual value: 'string', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs', 'storage.type.cs']
       expect(tokens[2][13]).toEqual value: ' f', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'meta.method-call.cs']
 
+    describe "Preprocessor directives", ->
+      directives = [ '#if DEBUG', '#else', '#elif RELEASE', '#endif',
+        '#define PCL', '#undef NET45',
+        '#warning Text warning', '#error Error warning',
+        '#line 200 "Special"', '#line default', '#line hidden',
+        '#region Name of region', '#endregion',
+        '#pragma Warning disable 414, CS3021', '#pragma warning restore 414',
+        '#pragma checksum "file.cs" "{3673e4ca-6098-4ec1-890f-8fceb2a794a2}" "{012345678AB}"' ]
+      locations = [ '$preprocessor', 'using A;\n$preprocessor\nusing B;',
+        'namespace A {\n$preprocessor\n}', 'namespace A {\nclass B {\n$preprocessor\n}\n}',
+        'class B{\npublic void A(){\n$preprocessor\n}\n}',
+        'class B {\npublic bool Prop {\nget{\n$preprocessor\nreturn true;\n}\n}' ]
+      leadings = [ '    ', ' ', '\t\t' ]
+
+      it "parses in correct locations", =>
+        for directive in directives
+          for location in locations
+            tokens = grammar.tokenizeLines location.replace '$preprocessor', directive
+            token = tokens[location.split('\n').indexOf('$preprocessor')]
+
+            expect(token[0].scopes).toContain('meta.preprocessor.cs')
+            expect(token[0].scopes).toContain('directive.preprocessor.cs')
+
+            firstSpaceAt = directive.indexOf(' ')
+            if firstSpaceAt > 0
+              expect(token[0].value).toBe(directive.slice(0, firstSpaceAt))
+              expect(token[2].value.trim()).toBe(directive.slice(firstSpaceAt + 1))
+              expect(token[2].scopes).toContain('meta.preprocessor.cs')
+              expect(token[2].scopes).toContain('entity.name.function.preprocessor.cs')
+            else
+              expect(token[0].value).toBe(directive)
+
+      it "parses in correct locations with leading whitespace", =>
+        for directive in directives
+          for location in locations
+            for leading in leadings
+              tokens = grammar.tokenizeLines location.replace '$preprocessor', leading + directive
+              token = tokens[location.split('\n').indexOf('$preprocessor')]
+
+              expect(token[1].scopes).toContain('meta.preprocessor.cs')
+              expect(token[1].scopes).toContain('directive.preprocessor.cs')
+
+              firstSpaceAt = directive.indexOf(' ')
+              if firstSpaceAt > 0
+                expect(token[1].value).toBe(directive.slice(0, firstSpaceAt))
+                expect(token[3].value.trim()).toBe(directive.slice(firstSpaceAt + 1))
+                expect(token[3].scopes).toContain('meta.preprocessor.cs')
+                expect(token[3].scopes).toContain('entity.name.function.preprocessor.cs')
+              else
+                expect(token[1].value).toBe(directive)
+
+      it "parses in correct locations with trailing line comment", =>
+        for directive in directives
+          for location in locations
+            tokens = grammar.tokenizeLines location.replace '$preprocessor', (directive + ' // A line comment')
+            token = tokens[location.split('\n').indexOf('$preprocessor')]
+
+            expect(token[0].scopes).toContain('meta.preprocessor.cs')
+            expect(token[0].scopes).toContain('directive.preprocessor.cs')
+
+            firstSpaceAt = directive.indexOf(' ')
+            if firstSpaceAt > 0
+              expect(token[0].value).toBe(directive.slice(0, firstSpaceAt))
+              expect(token[2].value.trim()).toBe(directive.slice(firstSpaceAt + 1))
+              expect(token[2].scopes).toContain('meta.preprocessor.cs')
+              expect(token[2].scopes).toContain('entity.name.function.preprocessor.cs')
+            else
+              expect(token[0].value).toBe(directive)
+
+            expect(token[token.length - 3].value).toBe('//')
+            expect(token[token.length - 3].scopes).toContain('comment.line.double-slash.cs')
+            expect(token[token.length - 2].value).toBe(' A line comment')
+            expect(token[token.length - 2].scopes).toContain('comment.line.double-slash.cs')
+
   describe "C# Script grammar", ->
     it "parses the grammar", ->
       grammar = atom.grammars.grammarForScopeName("source.csx")
