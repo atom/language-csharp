@@ -84,8 +84,11 @@
   'builtinTypes':
     'patterns': [
       {
-        'match': '\\b(bool|byte|sbyte|char|decimal|double|float|int|uint|long|ulong|object|short|ushort|string|void|class|struct|enum|interface|dynamic)\\b'
+        'match': '\\b(bool|byte|sbyte|char|decimal|double|float|int|uint|long|ulong|object|short|ushort|string|void|class|struct|enum|interface|dynamic)(\\?|\\*)?\\s'
         'name': 'storage.type.cs'
+        'captures':
+          '2':
+            'name': 'punctuation.storage.type.modifier.cs'
       }
     ]
   'class':
@@ -346,6 +349,9 @@
               {
                 'include': '#comments'
               }
+              {
+                'include': '#builtinTypes'
+              }
             ]
           }
           {
@@ -473,6 +479,9 @@
       }
       {
         'include': '#block'
+      }
+      {
+        'include': '#builtinTypes'
       }
     ]
   'preprocessor':
