@@ -375,6 +375,9 @@
             ]
           }
           {
+            'include': '#comments'
+          }
+          {
             'begin': '{'
             'beginCaptures':
               '0':
