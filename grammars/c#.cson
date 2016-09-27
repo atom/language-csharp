@@ -303,6 +303,9 @@
           {
             'include': '#builtinTypes'
           }
+          {
+            'include': '#comments'
+          }
         ]
       }
       {
@@ -370,6 +373,9 @@
                 'include': '#builtinTypes'
               }
             ]
+          }
+          {
+            'include': '#comments'
           }
           {
             'begin': '{'
