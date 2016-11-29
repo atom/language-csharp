@@ -84,7 +84,21 @@
   'builtinTypes':
     'patterns': [
       {
-        'match': '\\b(bool|byte|sbyte|char|decimal|double|float|int|uint|long|ulong|object|short|ushort|string|void|class|struct|enum|interface|dynamic)\\b'
+        'match': '\\b(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort|)\\s*(\\?|\\*|\\[\\s*\\])?\\s'
+        'name': 'storage.value.type.cs'
+        'captures':
+          '2':
+            'name': 'punctuation.storage.type.modifier.cs'
+      }
+      {
+        'match': '\\b(dynamic|object|string)\\s*(\\*|\\[\\s*\\])?\\s'
+        'name': 'storage.reference.type.cs'
+        'captures':
+          '2':
+            'name': 'punctuation.storage.type.modifier.cs'
+      }
+      {
+        'match': '\\b(void|class|struct|interface)\\s'
         'name': 'storage.type.cs'
       }
     ]
@@ -349,6 +363,9 @@
               {
                 'include': '#comments'
               }
+              {
+                'include': '#builtinTypes'
+              }
             ]
           }
           {
@@ -479,6 +496,9 @@
       }
       {
         'include': '#block'
+      }
+      {
+        'include': '#builtinTypes'
       }
     ]
   'preprocessor':
