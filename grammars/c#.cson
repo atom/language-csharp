@@ -237,6 +237,39 @@
         'name': 'string.quoted.double.literal.cs'
       }
       {
+        'begin': '\\$"'
+        'beginCaptures':
+          '0':
+            'name': 'punctuation.definition.string.begin.cs'
+        'end': '"'
+        'endCaptures':
+          '0':
+            'name': 'punctuation.definition.string.end.cs'
+        'name': 'string.quoted.double.interpolation.cs'
+        'patterns': [
+          {
+            'match': '{{|}}'
+            'name': 'constant.character.escape.cs'
+          }
+          {
+            'begin': '{'
+            'beginCaptures':
+              '0':
+                'name': 'punctuation.definition.section.embedded.begin.cs'
+            'end': '}'
+            'endCaptures':
+              '0':
+                'name': 'punctuation.definition.section.embedded.end.cs'
+            'contentName': 'meta.embedded.cs'
+            'patterns': [
+              {
+                'include': '$self'
+              }
+            ]
+          }
+        ]
+      }
+      {
         'begin': '"'
         'beginCaptures':
           '0':

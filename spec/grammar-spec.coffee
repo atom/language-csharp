@@ -184,6 +184,21 @@ describe "Language C# package", ->
             expect(token[token.length - 2].value).toBe(' A line comment')
             expect(token[token.length - 2].scopes).toContain('comment.line.double-slash.cs')
 
+    it "tokenizes interpolated strings", ->
+      {tokens} = grammar.tokenizeLine '$"I am a {tokenized 3} string {{yay}}!"'
+      expect(tokens[0]).toEqual value: '$"', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'punctuation.definition.string.begin.cs']
+      expect(tokens[1]).toEqual value: 'I am a ', scopes: ['source.cs', 'string.quoted.double.interpolation.cs']
+      expect(tokens[2]).toEqual value: '{', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'punctuation.definition.section.embedded.begin.cs']
+      expect(tokens[3]).toEqual value: 'tokenized ', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'meta.embedded.cs']
+      expect(tokens[4]).toEqual value: '3', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'meta.embedded.cs', 'constant.numeric.cs']
+      expect(tokens[5]).toEqual value: '}', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'punctuation.definition.section.embedded.end.cs']
+      expect(tokens[6]).toEqual value: ' string ', scopes: ['source.cs', 'string.quoted.double.interpolation.cs']
+      expect(tokens[7]).toEqual value: '{{', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'constant.character.escape.cs']
+      expect(tokens[8]).toEqual value: 'yay', scopes: ['source.cs', 'string.quoted.double.interpolation.cs']
+      expect(tokens[9]).toEqual value: '}}', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'constant.character.escape.cs']
+      expect(tokens[10]).toEqual value: '!', scopes: ['source.cs', 'string.quoted.double.interpolation.cs']
+      expect(tokens[11]).toEqual value: '"', scopes: ['source.cs', 'string.quoted.double.interpolation.cs', 'punctuation.definition.string.end.cs']
+
   describe "C# Script grammar", ->
     it "parses the grammar", ->
       grammar = atom.grammars.grammarForScopeName("source.csx")
