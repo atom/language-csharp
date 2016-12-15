@@ -117,7 +117,7 @@ repository:
         name: "storage.type.cs"
       }
     ]
-  class:
+  "type-declaration":
     begin: "(?=\\w?[\\w\\s]*[^@]?(?:class|struct|interface|enum)\\s+\\w+)"
     end: "}"
     endCaptures:
@@ -161,12 +161,24 @@ repository:
         name: "meta.class.body.cs"
         patterns: [
           {
-            include: "#method"
-          }
-          {
-            include: "#code"
+            include: "#type-body"
           }
         ]
+      }
+    ]
+  "type-body":
+    patterns: [
+      {
+        include: "type-declaration"
+      }
+      {
+        include: "#method"
+      }
+      {
+        include: "#storage-modifiers"
+      }
+      {
+        include: "#code"
       }
     ]
   code:
@@ -178,7 +190,7 @@ repository:
         include: "#comments"
       }
       {
-        include: "#class"
+        include: "#type-declaration"
       }
       {
         include: "#variable"
