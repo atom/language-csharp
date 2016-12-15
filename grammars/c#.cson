@@ -642,6 +642,19 @@ repository:
             include: "#comments"
           }
           {
+            begin: "=>"
+            beginCaptures:
+              "0":
+                name: "punctuation.section.method.begin.cs"
+            end: "(?=;)"
+            name: "meta.method.body.cs"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+          {
             begin: "{"
             beginCaptures:
               "0":
