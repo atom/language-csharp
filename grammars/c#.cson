@@ -62,6 +62,21 @@ repository:
         ]
       }
     ]
+  variable:
+    patterns: [
+      {
+        match: "^\\s*\\b(var)\\s+(.*?)(?=(=|;))"
+        captures:
+          "1":
+            name: "keyword.other.var.cs"
+      }
+      {
+        match: "^\\s*\\b(?!var|return|yield|throw)([\\w<>*?\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
+        captures:
+          "1":
+            name: "storage.type.variable.cs"
+      }
+    ]
   block:
     patterns: [
       {
@@ -164,6 +179,9 @@ repository:
       }
       {
         include: "#class"
+      }
+      {
+        include: "#variable"
       }
       {
         include: "#constants"
