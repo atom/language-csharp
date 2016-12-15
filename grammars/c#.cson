@@ -62,6 +62,42 @@ repository:
         ]
       }
     ]
+  "field-declaration":
+    patterns: [
+      {
+        begin: "(?=(?:(?:(?:private|public|volatile|internal|protected|static|readonly|const|event)\\s*)*)(?:[\\w\\s,<>\\[\\]]+?)(?:[\\w]+)\\s*(?:;|=|=>))"
+        end: "(?=;)"
+        patterns: [
+          {
+            match: "^\\s*((?:(?:private|public|volatile|internal|protected|static|readonly|const|event)\\s*)*)\\s*(.+?)\\s*([\\w]+)\\s*(?=;|=)"
+            captures:
+              "1":
+                patterns: [
+                  {
+                    include: "#storage-modifiers"
+                  }
+                ]
+              "2":
+                patterns: [
+                  {
+                    include: "#type"
+                  }
+                ]
+              "3":
+                name: "entity.name.variable.cs"
+          }
+          {
+            begin: "(?==>?)"
+            end: "(?=;|$)"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+        ]
+      }
+    ]
   variable:
     patterns: [
       {
@@ -170,6 +206,9 @@ repository:
     patterns: [
       {
         include: "type-declaration"
+      }
+      {
+        include: "#field-declaration"
       }
       {
         include: "#method"
