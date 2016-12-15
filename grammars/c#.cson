@@ -503,9 +503,9 @@ repository:
       {
         captures:
           "1":
-            name: "directive.preprocessor.cs"
+            name: "meta.directive.preprocessor.cs"
           "3":
-            name: "entity.name.function.preprocessor.cs"
+            name: "entity.name.preprocessor.cs"
         match: "^\\s*(#\\s*(if|else|elif|endif|define|undef|warning|error|line|pragma|region|endregion))\\b\\s*(.*?)(?=$|\\/\\/)"
         name: "meta.preprocessor.cs"
       }
