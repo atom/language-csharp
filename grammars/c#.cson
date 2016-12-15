@@ -19,7 +19,7 @@ patterns: [
 repository:
   using:
     begin: "^\\s*(using)\\b\\s+(static)?\\b\\s*([\\w.]+)"
-    beginCaptures:
+    captures:
       "1":
         name: "keyword.other.using.cs"
       "2":
@@ -28,7 +28,7 @@ repository:
         name: "entity.name.type.namespace.cs"
     end: "\\s*(?:$|(;))"
   namespace:
-    begin: "^\\s*((namespace)\\s+([\\w.]+))"
+    begin: "^\\s*[^@]?((namespace)\\s+([\\w.]+))"
     beginCaptures:
       "1":
         name: "meta.namespace.identifier.cs"
@@ -103,7 +103,7 @@ repository:
       }
     ]
   class:
-    begin: "(?=\\w?[\\w\\s]*(?:class|struct|interface|enum)\\s+\\w+)"
+    begin: "(?=\\w?[\\w\\s]*[^@]?(?:class|struct|interface|enum)\\s+\\w+)"
     end: "}"
     endCaptures:
       "0":
