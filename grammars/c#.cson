@@ -153,6 +153,49 @@ repository:
         name: "storage.type.cs"
       }
     ]
+  type:
+    patterns: [
+      {
+        match: "([\\w\\.]+\\s*<(?:[\\w\\s,\\.`\\[\\]\\*]+|\\g<1>)+>(?:\\s*\\[\\s*\\])?)"
+        comment: "generic type"
+        captures:
+          "1":
+            name: "storage.type.cs"
+      }
+      {
+        match: "\\b([a-zA-Z]+[\\w\\.]*\\b(?:\\s*\\[\\s*\\])?\\*?)"
+        comment: "non-generic type"
+        captures:
+          "1":
+            name: "storage.type.cs"
+      }
+    ]
+  "generic-constraints":
+    begin: "(where)\\s+(\\w+)\\s*:"
+    end: "(?=where|{|$)"
+    beginCaptures:
+      "1":
+        name: "keyword.other.cs"
+      "2":
+        name: "storage.type.cs"
+    patterns: [
+      {
+        match: "\\b(class|struct)\\b"
+        name: "keyword.other.cs"
+      }
+      {
+        match: "(new)\\s*\\(\\s*\\)"
+        captures:
+          "1":
+            name: "keyword.other.cs"
+      }
+      {
+        include: "#type"
+      }
+      {
+        include: "#generic-constraints"
+      }
+    ]
   "type-declaration":
     begin: "(?=\\w?[\\w\\s]*[^@]?(?:class|struct|interface|enum)\\s+\\w+)"
     end: "}"
@@ -168,25 +211,35 @@ repository:
         include: "#comments"
       }
       {
-        captures:
+        begin: "(class|struct|interface|enum)\\s+"
+        end: "(?={|:|$|where)"
+        name: "meta.class.identifier.cs"
+        beginCaptures:
           "1":
             name: "storage.modifier.cs"
-          "2":
-            name: "entity.name.type.class.cs"
-        match: "(class|struct|interface|enum)\\s+(\\w+)"
-        name: "meta.class.identifier.cs"
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
       }
       {
         begin: ":"
-        end: "(?={)"
+        end: "(?={|where)"
         patterns: [
           {
+            include: "#type"
+          }
+          {
+            match: "([\\w<>]+)\\s*"
             captures:
               "1":
                 name: "storage.type.cs"
-            match: "\\s*,?([A-Za-z_]\\w*)\\b"
           }
         ]
+      }
+      {
+        include: "#generic-constraints"
       }
       {
         begin: "{"
@@ -205,7 +258,7 @@ repository:
   "type-body":
     patterns: [
       {
-        include: "type-declaration"
+        include: "#type-declaration"
       }
       {
         include: "#field-declaration"
@@ -541,7 +594,7 @@ repository:
             include: "#builtinTypes"
           }
           {
-            begin: "([\\w.]+)\\s*\\("
+            begin: "([\\w]+\\s*(?:<[\\w<>\\s,`?]*>)?)\\s*\\("
             beginCaptures:
               "1":
                 name: "entity.name.function.cs"
