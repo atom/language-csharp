@@ -406,26 +406,28 @@ repository:
         name: "meta.class.body.cs"
       }
     ]
+  attribute:
+    begin: "\\["
+    end: "\\]"
+    name: "meta.method.annotation.cs"
+    patterns: [
+      {
+        include: "#constants"
+      }
+      {
+        include: "#preprocessor"
+      }
+      {
+        include: "#builtinTypes"
+      }
+      {
+        include: "#comments"
+      }
+    ]
   method:
     patterns: [
       {
-        begin: "\\["
-        end: "\\]"
-        name: "meta.method.annotation.cs"
-        patterns: [
-          {
-            include: "#constants"
-          }
-          {
-            include: "#preprocessor"
-          }
-          {
-            include: "#builtinTypes"
-          }
-          {
-            include: "#comments"
-          }
-        ]
+        include: "#attribute"
       }
       {
         begin: "(?=\\bnew\\s+)(?=[\\w<].*\\s+)(?=[^=]+\\()"
