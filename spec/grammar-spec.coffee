@@ -124,7 +124,7 @@ describe "Language C# package", ->
         'class B {\npublic bool Prop {\nget{\n$preprocessor\nreturn true;\n}\n}' ]
       leadings = [ '    ', ' ', '\t\t' ]
 
-      it "parses in correct locations", =>
+      it "parses in correct locations", ->
         for directive in directives
           for location in locations
             tokens = grammar.tokenizeLines location.replace '$preprocessor', directive
@@ -142,7 +142,7 @@ describe "Language C# package", ->
             else
               expect(token[0].value).toBe(directive)
 
-      it "parses in correct locations with leading whitespace", =>
+      it "parses in correct locations with leading whitespace", ->
         for directive in directives
           for location in locations
             for leading in leadings
@@ -161,7 +161,7 @@ describe "Language C# package", ->
               else
                 expect(token[1].value).toBe(directive)
 
-      it "parses in correct locations with trailing line comment", =>
+      it "parses in correct locations with trailing line comment", ->
         for directive in directives
           for location in locations
             tokens = grammar.tokenizeLines location.replace '$preprocessor', (directive + ' // A line comment')
