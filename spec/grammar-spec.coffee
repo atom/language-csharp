@@ -131,14 +131,14 @@ describe "Language C# package", ->
             token = tokens[location.split('\n').indexOf('$preprocessor')]
 
             expect(token[0].scopes).toContain('meta.preprocessor.cs')
-            expect(token[0].scopes).toContain('directive.preprocessor.cs')
+            expect(token[0].scopes).toContain('meta.directive.preprocessor.cs')
 
             firstSpaceAt = directive.indexOf(' ')
             if firstSpaceAt > 0
               expect(token[0].value).toBe(directive.slice(0, firstSpaceAt))
               expect(token[2].value.trim()).toBe(directive.slice(firstSpaceAt + 1))
               expect(token[2].scopes).toContain('meta.preprocessor.cs')
-              expect(token[2].scopes).toContain('entity.name.function.preprocessor.cs')
+              expect(token[2].scopes).toContain('entity.name.preprocessor.cs')
             else
               expect(token[0].value).toBe(directive)
 
@@ -150,14 +150,14 @@ describe "Language C# package", ->
               token = tokens[location.split('\n').indexOf('$preprocessor')]
 
               expect(token[1].scopes).toContain('meta.preprocessor.cs')
-              expect(token[1].scopes).toContain('directive.preprocessor.cs')
+              expect(token[1].scopes).toContain('meta.directive.preprocessor.cs')
 
               firstSpaceAt = directive.indexOf(' ')
               if firstSpaceAt > 0
                 expect(token[1].value).toBe(directive.slice(0, firstSpaceAt))
                 expect(token[3].value.trim()).toBe(directive.slice(firstSpaceAt + 1))
                 expect(token[3].scopes).toContain('meta.preprocessor.cs')
-                expect(token[3].scopes).toContain('entity.name.function.preprocessor.cs')
+                expect(token[3].scopes).toContain('entity.name.preprocessor.cs')
               else
                 expect(token[1].value).toBe(directive)
 
@@ -168,14 +168,14 @@ describe "Language C# package", ->
             token = tokens[location.split('\n').indexOf('$preprocessor')]
 
             expect(token[0].scopes).toContain('meta.preprocessor.cs')
-            expect(token[0].scopes).toContain('directive.preprocessor.cs')
+            expect(token[0].scopes).toContain('meta.directive.preprocessor.cs')
 
             firstSpaceAt = directive.indexOf(' ')
             if firstSpaceAt > 0
               expect(token[0].value).toBe(directive.slice(0, firstSpaceAt))
               expect(token[2].value.trim()).toBe(directive.slice(firstSpaceAt + 1))
               expect(token[2].scopes).toContain('meta.preprocessor.cs')
-              expect(token[2].scopes).toContain('entity.name.function.preprocessor.cs')
+              expect(token[2].scopes).toContain('entity.name.preprocessor.cs')
             else
               expect(token[0].value).toBe(directive)
 
