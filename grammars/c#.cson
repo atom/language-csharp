@@ -19,7 +19,7 @@ patterns: [
 repository:
   using:
     begin: "^\\s*(using)\\b\\s+(static)?\\b\\s*([\\w.]+)"
-    captures:
+    beginCaptures:
       "1":
         name: "keyword.other.using.cs"
       "2":
@@ -563,7 +563,7 @@ repository:
       }
     ]
   parameters:
-    begin: "\\b(ref|params|out)?\\s*\\b([\\w.\\[\\]]+)\\s+(\\w+)\\s*(=)?"
+    begin: "\\b(ref|params|out)?\\s*\\b(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*(=)?"
     beginCaptures:
       "1":
         name: "storage.type.modifier.cs"
