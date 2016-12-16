@@ -28,7 +28,7 @@ repository:
         name: "entity.name.type.namespace.cs"
     end: "\\s*(?:$|(;))"
   namespace:
-    begin: "^\\s*((namespace)\\s+([\\w.]+))"
+    begin: "^\\s*[^@]?((namespace)\\s+([\\w.]+))"
     beginCaptures:
       "1":
         name: "meta.namespace.identifier.cs"
@@ -60,6 +60,57 @@ repository:
             include: "#code"
           }
         ]
+      }
+    ]
+  "field-declaration":
+    patterns: [
+      {
+        begin: "(?=(?:(?:(?:private|public|volatile|internal|protected|static|readonly|const|event)\\s*)*)(?:[\\w\\s,<>\\[\\]]+?)(?:[\\w]+)\\s*(?:;|=|=>))"
+        end: "(?=;)"
+        patterns: [
+          {
+            match: "^\\s*((?:(?:private|public|volatile|internal|protected|static|readonly|const|event)\\s*)*)\\s*(.+?)\\s*([\\w]+)\\s*(?=;|=)"
+            captures:
+              "1":
+                patterns: [
+                  {
+                    include: "#storage-modifiers"
+                  }
+                ]
+              "2":
+                patterns: [
+                  {
+                    include: "#type"
+                  }
+                ]
+              "3":
+                name: "entity.name.variable.cs"
+          }
+          {
+            begin: "(?==>?)"
+            end: "(?=;|$)"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  variable:
+    patterns: [
+      {
+        match: "^\\s*\\b(var)\\s+(.*?)(?=(=|;))"
+        captures:
+          "1":
+            name: "keyword.other.var.cs"
+      }
+      {
+        match: "^\\s*\\b(?!var|return|yield|throw)([\\w<>*?\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
+        captures:
+          "1":
+            name: "storage.type.variable.cs"
       }
     ]
   block:
@@ -102,8 +153,51 @@ repository:
         name: "storage.type.cs"
       }
     ]
-  class:
-    begin: "(?=\\w?[\\w\\s]*(?:class|struct|interface|enum)\\s+\\w+)"
+  type:
+    patterns: [
+      {
+        match: "([\\w\\.]+\\s*<(?:[\\w\\s,\\.`\\[\\]\\*]+|\\g<1>)+>(?:\\s*\\[\\s*\\])?)"
+        comment: "generic type"
+        captures:
+          "1":
+            name: "storage.type.cs"
+      }
+      {
+        match: "\\b([a-zA-Z]+[\\w\\.]*\\b(?:\\s*\\[\\s*\\])?\\*?)"
+        comment: "non-generic type"
+        captures:
+          "1":
+            name: "storage.type.cs"
+      }
+    ]
+  "generic-constraints":
+    begin: "(where)\\s+(\\w+)\\s*:"
+    end: "(?=where|{|$)"
+    beginCaptures:
+      "1":
+        name: "keyword.other.cs"
+      "2":
+        name: "storage.type.cs"
+    patterns: [
+      {
+        match: "\\b(class|struct)\\b"
+        name: "keyword.other.cs"
+      }
+      {
+        match: "(new)\\s*\\(\\s*\\)"
+        captures:
+          "1":
+            name: "keyword.other.cs"
+      }
+      {
+        include: "#type"
+      }
+      {
+        include: "#generic-constraints"
+      }
+    ]
+  "type-declaration":
+    begin: "(?=\\w?[\\w\\s]*[^@]?(?:class|struct|interface|enum)\\s+\\w+)"
     end: "}"
     endCaptures:
       "0":
@@ -117,25 +211,35 @@ repository:
         include: "#comments"
       }
       {
-        captures:
+        begin: "(class|struct|interface|enum)\\s+"
+        end: "(?={|:|$|where)"
+        name: "meta.class.identifier.cs"
+        beginCaptures:
           "1":
             name: "storage.modifier.cs"
-          "2":
-            name: "entity.name.type.class.cs"
-        match: "(class|struct|interface|enum)\\s+(\\w+)"
-        name: "meta.class.identifier.cs"
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
       }
       {
         begin: ":"
-        end: "(?={)"
+        end: "(?={|where)"
         patterns: [
           {
+            include: "#type"
+          }
+          {
+            match: "([\\w<>]+)\\s*"
             captures:
               "1":
                 name: "storage.type.cs"
-            match: "\\s*,?([A-Za-z_]\\w*)\\b"
           }
         ]
+      }
+      {
+        include: "#generic-constraints"
       }
       {
         begin: "{"
@@ -146,12 +250,30 @@ repository:
         name: "meta.class.body.cs"
         patterns: [
           {
-            include: "#method"
-          }
-          {
-            include: "#code"
+            include: "#type-body"
           }
         ]
+      }
+    ]
+  "type-body":
+    patterns: [
+      {
+        include: "#type-declaration"
+      }
+      {
+        include: "#field-declaration"
+      }
+      {
+        include: "#property-declaration"
+      }
+      {
+        include: "#method"
+      }
+      {
+        include: "#storage-modifiers"
+      }
+      {
+        include: "#code"
       }
     ]
   code:
@@ -163,7 +285,10 @@ repository:
         include: "#comments"
       }
       {
-        include: "#class"
+        include: "#type-declaration"
+      }
+      {
+        include: "#variable"
       }
       {
         include: "#constants"
@@ -219,15 +344,91 @@ repository:
         name: "comment.line.double-slash.cs"
       }
     ]
-  constants:
+  "string-interpolated":
     patterns: [
       {
-        match: "\\b(true|false|null|this|base)\\b"
-        name: "constant.language.cs"
+        begin: "\\$\""
+        end: "\"|$"
+        beginCaptures:
+          "0":
+            name: "punctuation.definition.string.begin.cs"
+        endCaptures:
+          "0":
+            name: "punctuation.definition.string.end.cs"
+        patterns: [
+          {
+            begin: "([^{}]+?)(?={|\"|$)"
+            end: "(?={|\"|$)"
+            beginCaptures:
+              "1":
+                name: "string.quoted.double.cs"
+          }
+          {
+            begin: "{"
+            end: "}"
+            name: "meta.interpolated.expression.cs"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+          {
+            begin: "([^{}]+?)(?={|\"|$)"
+            end: "(?={|\"|$)"
+            beginCaptures:
+              "1":
+                name: "string.quoted.double.cs"
+          }
+        ]
+      }
+    ]
+  "string-interpolated-verbatim":
+    patterns: [
+      {
+        begin: "\\$@\""
+        end: "\""
+        beginCaptures:
+          "0":
+            name: "punctuation.definition.string.begin.cs"
+        endCaptures:
+          "0":
+            name: "punctuation.definition.string.end.cs"
+        patterns: [
+          {
+            begin: "([^{}]+?)(?={|\"|$)"
+            end: "(?={|\"|$)"
+            beginCaptures:
+              "1":
+                name: "string.quoted.double.literal.cs"
+          }
+          {
+            begin: "{"
+            end: "}"
+            name: "meta.interpolated.expression.cs"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+          {
+            begin: "([^{}]+?)(?={|\"|$)"
+            end: "(?={|\"|$)"
+            beginCaptures:
+              "1":
+                name: "string.quoted.double.literal.cs"
+          }
+        ]
+      }
+    ]
+  string:
+    patterns: [
+      {
+        include: "#string-interpolated-verbatim"
       }
       {
-        match: "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(?i:f|d|m|u|l|ul|lu)?\\b"
-        name: "constant.numeric.cs"
+        include: "#string-interpolated"
       }
       {
         captures:
@@ -271,6 +472,20 @@ repository:
         ]
       }
     ]
+  constants:
+    patterns: [
+      {
+        match: "\\b(true|false|null|this|base)\\b"
+        name: "constant.language.cs"
+      }
+      {
+        match: "\\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(?i:f|d|m|u|l|ul|lu)?\\b"
+        name: "constant.numeric.cs"
+      }
+      {
+        include: "#string"
+      }
+    ]
   keywords:
     patterns: [
       {
@@ -298,26 +513,61 @@ repository:
         name: "meta.class.body.cs"
       }
     ]
+  attribute:
+    begin: "\\["
+    end: "\\]"
+    name: "meta.method.annotation.cs"
+    patterns: [
+      {
+        include: "#constants"
+      }
+      {
+        include: "#preprocessor"
+      }
+      {
+        include: "#builtinTypes"
+      }
+      {
+        include: "#comments"
+      }
+    ]
+  "property-declaration":
+    begin: "^\\s*(?!.*\\b(?:class|interface|struct)\\b)((?:\\w+\\s+)*?)(?!(?:private|public|internal|protected|static|new|virtual|override))(\\w.+?)\\s+(\\w+)\\s*(?={|$)"
+    end: "}|;|$"
+    beginCaptures:
+      "1":
+        patterns: [
+          {
+            include: "#storage-modifiers"
+          }
+        ]
+      "2":
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
+      "3":
+        name: "entity.name.function.cs"
+    name: "meta.property.cs"
+    patterns: [
+      {
+        include: "#block"
+      }
+      {
+        begin: "="
+        end: "(?=;)"
+        patterns: [
+          {
+            include: "#code"
+          }
+        ]
+      }
+    ]
   method:
     patterns: [
       {
-        begin: "\\["
-        end: "\\]"
-        name: "meta.method.annotation.cs"
-        patterns: [
-          {
-            include: "#constants"
-          }
-          {
-            include: "#preprocessor"
-          }
-          {
-            include: "#builtinTypes"
-          }
-          {
-            include: "#comments"
-          }
-        ]
+        include: "#attribute"
       }
       {
         begin: "(?=\\bnew\\s+)(?=[\\w<].*\\s+)(?=[^=]+\\()"
@@ -344,7 +594,7 @@ repository:
             include: "#builtinTypes"
           }
           {
-            begin: "([\\w.]+)\\s*\\("
+            begin: "([\\w]+\\s*(?:<[\\w<>\\s,`?]*>)?)\\s*\\("
             beginCaptures:
               "1":
                 name: "entity.name.function.cs"
@@ -392,11 +642,11 @@ repository:
             include: "#comments"
           }
           {
-            begin: "{"
+            begin: "=>"
             beginCaptures:
               "0":
                 name: "punctuation.section.method.begin.cs"
-            end: "(?=})"
+            end: "(?=;)"
             name: "meta.method.body.cs"
             patterns: [
               {
@@ -404,42 +654,11 @@ repository:
               }
             ]
           }
-        ]
-      }
-      {
-        begin: "(?!new)(?=[\\w<].*\\s+)(?=[^=]+\\{)"
-        end: "}"
-        endCaptures:
-          "0":
-            name: "punctuation.section.property.end.cs"
-        name: "meta.property.cs"
-        patterns: [
-          {
-            include: "#storage-modifiers"
-          }
-          {
-            begin: "([\\w.]+)\\s*(?={)"
-            captures:
-              "1":
-                name: "entity.name.function.cs"
-            end: "(?={)"
-            name: "meta.method.identifier.cs"
-          }
-          {
-            begin: "(?=\\w.*\\s+[\\w.]+\\s*\\{)"
-            end: "(?=[\\w.]+\\s*\\{)"
-            name: "meta.method.return-type.cs"
-            patterns: [
-              {
-                include: "#builtinTypes"
-              }
-            ]
-          }
           {
             begin: "{"
             beginCaptures:
               "0":
-                name: "punctuation.section.property.begin.cs"
+                name: "punctuation.section.method.begin.cs"
             end: "(?=})"
             name: "meta.method.body.cs"
             patterns: [
@@ -473,7 +692,7 @@ repository:
       }
     ]
   parameters:
-    begin: "\\b(ref|params|out)?\\s*\\b([\\w.\\[\\]]+)\\s+(\\w+)\\s*(=)?"
+    begin: "\\b(ref|params|out)?\\s*\\b(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*(=)?"
     beginCaptures:
       "1":
         name: "storage.type.modifier.cs"
