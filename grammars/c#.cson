@@ -247,9 +247,6 @@ repository:
     name: "meta.class.cs"
     patterns: [
       {
-        include: "#storage-modifiers"
-      }
-      {
         include: "#comments"
       }
       {
@@ -543,7 +540,7 @@ repository:
         name: "keyword.operator.cs"
       }
       {
-        match: "\\b(event|delegate|fixed|add|remove|set|get|value|alias|global)\\b"
+        match: "\\b(event|delegate|fixed|add|remove|set|get|value|alias|global|extern)\\b"
         name: "keyword.other.cs"
       }
     ]
@@ -570,11 +567,8 @@ repository:
     end: "}|;|$"
     beginCaptures:
       "1":
-        patterns: [
-          {
-            include: "#storage-modifiers"
-          }
-        ]
+        match: "\\b(private|public|internal|protected|static|new|virtual|override)\\b"
+        name: "storage.modifier.cs"
       "2":
         patterns: [
           {
@@ -622,7 +616,8 @@ repository:
         name: "meta.method.cs"
         patterns: [
           {
-            include: "#storage-modifiers"
+            match: "\\b(internal|public|protected|private|static|new|abstract|virtual|override|implicit|explicit|operator|async|partial)\\b"
+            name: "storage.modifier.cs"
           }
           {
             match: "\\bvoid\\b"
@@ -790,6 +785,3 @@ repository:
         name: "meta.preprocessor.cs"
       }
     ]
-  "storage-modifiers":
-    match: "\\b(event|delegate|internal|public|protected|private|static|const|new|sealed|abstract|virtual|override|extern|unsafe|readonly|volatile|implicit|explicit|operator|async|partial|alias)\\b"
-    name: "storage.modifier.cs"
