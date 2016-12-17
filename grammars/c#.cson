@@ -168,7 +168,7 @@ repository:
   returnType:
     patterns: [
       {
-        match: "\\bvoid\\b"
+        match: "void"
         name: "storage.type.cs"
       }
       {
@@ -187,14 +187,14 @@ repository:
   builtinTypes:
     patterns: [
       {
-        match: "\\b(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort)\\s*(\\?|\\*)?\\s*\\b"
+        match: "(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort)[ ]*(\\?|\\*)?"
         name: "storage.value.type.cs"
         captures:
           "2":
             name: "punctuation.storage.type.modifier.cs"
       }
       {
-        match: "\\b(dynamic|object|string)\\s*(\\*)?\\s*\\b"
+        match: "(dynamic|object|string)[ ]*([*])?"
         name: "storage.reference.type.cs"
         captures:
           "2":
@@ -214,7 +214,7 @@ repository:
             match: ","
           }
           {
-            match: "(\\w+)"
+            match: "(\\w+([?*])?)"
             captures:
               "1":
                 name: "meta.generic.type.specifier"
@@ -378,6 +378,11 @@ repository:
       }
       {
         include: "#method-call"
+      }
+      {
+        # This should be types but we need to further refine other rules or
+        # it will greedy consume variable names as type names.
+        include: "#builtinTypes"
       }
     ]
   comments:
