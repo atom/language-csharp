@@ -235,13 +235,18 @@ repository:
       }
     ]
   "generic-constraints":
-    begin: "(where)\\s+(\\w+)\\s*:"
+    begin: "(where)\\s+(\\w+([?*])?)\\s*:"
     end: "(?=where|{|$)"
     beginCaptures:
       "1":
         name: "keyword.other.cs"
       "2":
-        name: "storage.type.cs"
+        name: "meta.generic.type.specifier"
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
     patterns: [
       {
         match: "\\b(class|struct)\\b"
