@@ -105,7 +105,7 @@ repository:
               "2":
                 patterns: [
                   {
-                    include: "#type"
+                    include: "#typeName"
                   }
                 ]
               "3":
@@ -174,7 +174,7 @@ repository:
             name: "punctuation.storage.type.modifier.cs"
       }
     ]
-  type:
+  typeName:
     patterns: [
       {
         match: "([\\w\\.]+\\s*<(?:[\\w\\s,\\.`\\[\\]\\*]+|\\g<1>)+>(?:\\s*\\[\\s*\\])?)"
@@ -211,7 +211,7 @@ repository:
             name: "keyword.other.cs"
       }
       {
-        include: "#type"
+        include: "#typeName"
       }
       {
         include: "#generic-constraints"
@@ -240,7 +240,7 @@ repository:
             name: "storage.modifier.cs"
         patterns: [
           {
-            include: "#type"
+            include: "#typeName"
           }
         ]
       }
@@ -249,7 +249,7 @@ repository:
         end: "(?={|where)"
         patterns: [
           {
-            include: "#type"
+            include: "#typeName"
           }
           {
             match: "([\\w<>]+)\\s*"
@@ -557,7 +557,7 @@ repository:
       "2":
         patterns: [
           {
-            include: "#type"
+            include: "#typeName"
           }
         ]
       "3":
