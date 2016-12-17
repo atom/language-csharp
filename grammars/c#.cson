@@ -612,7 +612,7 @@ repository:
               "1":
                 name: "entity.name.function.cs"
             end: "\\)"
-            name: "meta.method.identifier.cs.test-blue"
+            name: "meta.method.identifier.cs"
             patterns: [
               {
                 include: "#parameters"
