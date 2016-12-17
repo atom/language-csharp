@@ -97,11 +97,7 @@ repository:
             match: "^\\s*((?:(?:private|public|volatile|internal|protected|static|readonly|const|event|extern)\\s*)*)\\s*(.+?)\\s*([\\w]+)\\s*(?=;|=)"
             captures:
               "1":
-                patterns: [
-                  {
-                    include: "#storage-modifiers"
-                  }
-                ]
+                name: "storage.modifier.cs"
               "2":
                 patterns: [
                   {
