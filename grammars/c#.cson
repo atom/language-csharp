@@ -140,10 +140,12 @@ repository:
             name: "keyword.other.var.cs"
       }
       {
-        match: "^\\s*\\b(?!var|return|yield|throw)([\\w<>*?\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
+      }
+      {
+        match: "^\\s*\\b(?!var|return|yield|throw)([\\w+<>*?,\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
         captures:
           "1":
-            name: "storage.type.variable.cs"
+            name: "storage.type.variable.cs.test-red"
       }
     ]
   block:
@@ -416,9 +418,6 @@ repository:
         include: "#type-declaration"
       }
       {
-        include: "#variable"
-      }
-      {
         include: "#constants"
       }
       {
@@ -434,6 +433,9 @@ repository:
         # This should be types but we need to further refine other rules or
         # it will greedy consume variable names as type names.
         include: "#builtinTypes"
+      }
+      {
+        include: "#variable"
       }
     ]
   comments:
@@ -456,7 +458,7 @@ repository:
         captures:
           "0":
             name: "punctuation.definition.comment.cs"
-        end: "\\*/\\n?"
+        end: "\\*/"
         name: "comment.block.cs"
       }
       {
@@ -803,7 +805,7 @@ repository:
     begin: "\\b(ref|params|out)?\\s*\\b(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*(=)?"
     beginCaptures:
       "1":
-        name: "storage.type.modifier.cs"
+        name: "storage.modifier.cs"
       "2":
         patterns: [
           {
