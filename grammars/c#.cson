@@ -165,6 +165,16 @@ repository:
         ]
       }
     ]
+  returnType:
+    patterns: [
+      {
+        match: "\\bvoid\\b"
+        name: "storage.type.cs"
+      }
+      {
+        include: "#type"
+      }
+    ]
   type:
     patterns: [
       {
@@ -624,6 +634,37 @@ repository:
         ]
       }
       {
+        begin: "\\b(internal|public|protected|private|static|new|abstract|virtual|override|implicit|explicit|operator|async|partial)\\s+(void|[\\w<>.?*\\[\\],]+)\\s+(?=.*=>\\s*)"
+        beginCaptures:
+          "1":
+            name: "storage.modifier.cs"
+          "2":
+            patterns: [
+              {
+                include: "#returnType"
+              }
+            ]
+        end: ";"
+        patterns: [
+          {
+            include: "#parameters"
+          }
+          {
+            begin: "=>"
+            beginCaptures:
+              "0":
+                name: "punctuation.section.method.begin.cs"
+            end: "(?=;)"
+            name: "meta.method.body.cs"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+        ]
+      }
+      {
         begin: "(?<!=|=\\s)(?!new)(?!.*(=|\\/\\/|\\/\\*).*\\()(?=[\\w<].*\\s+.+\\()"
         end: "(})|(?=;)"
         endCaptures:
@@ -636,11 +677,8 @@ repository:
             name: "storage.modifier.cs"
           }
           {
-            match: "\\bvoid\\b"
-            name: "storage.type.cs"
-          }
-          {
-            include: "#builtinTypes"
+            name: "meta.method.return-type.cs"
+            include: "#returnType"
           }
           {
             begin: "([\\w]+)\\s*(<[\\w<>\\s,`?]*>)?\\s*\\("
@@ -685,11 +723,7 @@ repository:
             name: "meta.method.return-type.cs"
             patterns: [
               {
-                match: "\\bvoid\\b"
-                name: "storage.type.cs"
-              }
-              {
-                include: "#builtinTypes"
+                include: "#returnType"
               }
             ]
           }
@@ -708,19 +742,6 @@ repository:
           }
           {
             include: "#comments"
-          }
-          {
-            begin: "=>"
-            beginCaptures:
-              "0":
-                name: "punctuation.section.method.begin.cs"
-            end: "(?=;)"
-            name: "meta.method.body.cs"
-            patterns: [
-              {
-                include: "#code"
-              }
-            ]
           }
           {
             begin: "{"
