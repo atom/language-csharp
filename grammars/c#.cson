@@ -105,7 +105,7 @@ repository:
               "2":
                 patterns: [
                   {
-                    include: "#typeName"
+                    include: "#type"
                   }
                 ]
               "3":
@@ -157,6 +157,15 @@ repository:
         ]
       }
     ]
+  type:
+    patterns: [
+      {
+        include: "#builtinTypes"
+      }
+      {
+        include: "#typeName"
+      }
+    ]
   builtinTypes:
     patterns: [
       {
@@ -188,7 +197,7 @@ repository:
         comment: "non-generic type"
         captures:
           "1":
-            name: "storage.type.cs"
+            name: "meta.class.identifier.cs"
       }
     ]
   "generic-constraints":
@@ -211,7 +220,7 @@ repository:
             name: "keyword.other.cs"
       }
       {
-        include: "#typeName"
+        include: "#type"
       }
       {
         include: "#generic-constraints"
@@ -234,13 +243,25 @@ repository:
       {
         begin: "(class|struct|interface|enum)\\s+"
         end: "(?={|:|$|where)"
-        name: "meta.class.identifier.cs"
         beginCaptures:
           "1":
-            name: "storage.modifier.cs"
+            name: "keyword.class.declaration.cs"
         patterns: [
           {
             include: "#typeName"
+          }
+          {
+            begin: "[<]\\s*"
+            end: "\\s*[>]"
+            name: "punctuation.type.specifiers.cs"
+            patterns: [
+              {
+                include: "#typeName"
+              }
+              {
+                match: ","
+              }
+            ]
           }
         ]
       }
@@ -289,9 +310,6 @@ repository:
       }
       {
         include: "#method"
-      }
-      {
-        include: "#storage-modifiers"
       }
       {
         include: "#code"
@@ -557,7 +575,7 @@ repository:
       "2":
         patterns: [
           {
-            include: "#typeName"
+            include: "#type"
           }
         ]
       "3":
