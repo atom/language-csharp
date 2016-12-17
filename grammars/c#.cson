@@ -353,8 +353,40 @@ repository:
         include: "#code"
       }
     ]
+  typeOperator:
+    patterns: [
+      {
+        include: "#keywordTypeOperator"
+      }
+      {
+        include: "#castTypeOperator"
+      }
+    ]
+  castTypeOperator:
+    match: "\\((\\w+[?*,<>\\[\\]]*)\\)"
+    captures:
+      "1":
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
+  keywordTypeOperator:
+    match: "\\b(is|as|new)\\s+(\\w+[?*,<>\\[\\]]*)"
+    captures:
+      "1":
+        name: "keyword.operator.cs"
+      "2":
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
   code:
     patterns: [
+      {
+        include: "#typeOperator"
+      }
       {
         include: "#block"
       }
