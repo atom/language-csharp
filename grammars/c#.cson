@@ -649,6 +649,24 @@ repository:
             beginCaptures:
               "1":
                 name: "entity.name.function.cs"
+              "2":
+                name: "meta.generic.method.identifier"
+                patterns: [
+                  {
+                    match: ","
+                  }
+                  {
+                    match: "(\\w+)"
+                    captures:
+                      "1":
+                        name: "meta.generic.type.specifier"
+                        patterns: [
+                          {
+                            include: "#type"
+                          }
+                        ]
+                  }
+                ]
             end: "\\)"
             name: "meta.method.identifier.cs"
             patterns: [
