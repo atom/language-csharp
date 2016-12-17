@@ -187,14 +187,14 @@ repository:
   builtinTypes:
     patterns: [
       {
-        match: "(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort)[ ]*(\\?|\\*)?"
+        match: "\\b(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort)[ ]*(\\?|\\*)?\\b"
         name: "storage.value.type.cs"
         captures:
           "2":
             name: "punctuation.storage.type.modifier.cs"
       }
       {
-        match: "(dynamic|object|string)[ ]*([*])?"
+        match: "\\b(dynamic|object|string)[ ]*([*])?\\b"
         name: "storage.reference.type.cs"
         captures:
           "2":
