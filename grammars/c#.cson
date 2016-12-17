@@ -639,43 +639,13 @@ repository:
         ]
       }
       {
-        begin: "\\b(internal|public|protected|private|static|new|abstract|virtual|override|implicit|explicit|operator|async|partial)\\s+(void|[\\w<>.?*\\[\\],]+)\\s+(?=.*=>\\s*)"
-        beginCaptures:
-          "1":
-            name: "storage.modifier.cs"
-          "2":
-            name: "meta.method.return-type.cs"
-            patterns: [
-              {
-                include: "#returnType"
-              }
-            ]
-        end: ";"
-        patterns: [
-          {
-            include: "#parameters"
-          }
-          {
-            begin: "=>"
-            beginCaptures:
-              "0":
-                name: "punctuation.section.method.begin.cs"
-            end: "(?=;)"
-            name: "meta.method.body.cs"
-            patterns: [
-              {
-                include: "#code"
-              }
-            ]
-          }
-        ]
+        match: "\\b(internal|public|protected|private|static|new|abstract|virtual|override|implicit|explicit|operator|async|partial)\\b"
+        name: "storage.modifier.cs"
       }
       {
-        begin: "\\b(internal|public|protected|private|static|new|abstract|virtual|override|implicit|explicit|operator|async|partial)\\s+(void|[\\w<>.?*\\[\\],]+)\\s+(?=.*{\\s*)"
+        begin: "(void|[\\w<>.?*\\[\\],]+)\\s*(?=.*)"
         beginCaptures:
           "1":
-            name: "storage.modifier.cs"
-          "2":
             name: "meta.method.return-type.cs"
             patterns: [
               {
@@ -722,16 +692,6 @@ repository:
               }
               {
                 include: "#comments"
-              }
-            ]
-          }
-          {
-            begin: "(?=\\w.*\\s+[\\w.]+\\s*\\()"
-            end: "(?=[\\w.]+\\s*\\()"
-            name: "meta.method.return-type.cs"
-            patterns: [
-              {
-                include: "#returnType"
               }
             ]
           }
