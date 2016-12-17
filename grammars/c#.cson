@@ -90,7 +90,7 @@ repository:
   "field-declaration":
     patterns: [
       {
-        begin: "(?=(?:(?:(?:private|public|volatile|internal|protected|static|readonly|const|event|extern)\\s*)*)(?:[\\w\\s,<>\\[\\]]+?)(?:[\\w]+)\\s*(?:;|=|=>))"
+        begin: "(?=(?:(?:(?:private|public|volatile|internal|protected|static|readonly|const|event|extern)\\s*)*)(?:[\\w\\s?*,<>\\[\\]]+?)(?:[\\w]+)\\s*(?:;|=|=>))"
         end: "(?=;)"
         patterns: [
           {
@@ -349,9 +349,6 @@ repository:
         include: "#constants"
       }
       {
-        include: "#storage-modifiers"
-      }
-      {
         include: "#keywords"
       }
       {
@@ -359,12 +356,6 @@ repository:
       }
       {
         include: "#method-call"
-      }
-      {
-        include: "#builtinTypes"
-      }
-      {
-        include: "#documentation"
       }
     ]
   comments:
