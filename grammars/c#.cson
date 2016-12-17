@@ -529,14 +529,6 @@ repository:
         match: "\\b(event|delegate|fixed|add|remove|set|get|value|alias|global)\\b"
         name: "keyword.other.cs"
       }
-      {
-        match: "\\b(var)\\b"
-        name: "storage.type.var.cs"
-      }
-      {
-        match: "[@]\\b(var|event|delegate|add|remove|set|get|value|new|is|as|using|checked|unchecked|typeof|sizeof|override|readonly|stackalloc|from|where|select|group|into|orderby|join|let|on|equals|by|ascending|descending|if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await|nameof|when|alias|global)\\b"
-        name: "meta.class.body.cs"
-      }
     ]
   attribute:
     begin: "\\["
