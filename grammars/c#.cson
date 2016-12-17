@@ -366,11 +366,25 @@ repository:
       {
         include: "#castTypeOperator"
       }
+      {
+        include: "#functionTypeOperator"
+      }
     ]
   castTypeOperator:
     match: "\\((\\w+[?*,<>\\[\\]]*)\\)"
     captures:
       "1":
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
+  functionTypeOperator:
+    match: "\\b(typeof|sizeof)\\s*\\((\\w+[?*,<>\\[\\]]*)\\)"
+    captures:
+      "1":
+        name: "keyword.operator.cs"
+      "2":
         patterns: [
           {
             include: "#type"
@@ -607,7 +621,7 @@ repository:
         name: "keyword.linq.cs"
       }
       {
-        match: "\\b(new|is|as|using|checked|unchecked|typeof|sizeof|override|readonly|stackalloc|nameof)\\b"
+        match: "\\b(using|checked|unchecked|override|readonly|stackalloc|nameof)\\b"
         name: "keyword.operator.cs"
       }
       {
