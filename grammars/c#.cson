@@ -639,6 +639,7 @@ repository:
           "1":
             name: "storage.modifier.cs"
           "2":
+            name: "meta.method.return-type.cs"
             patterns: [
               {
                 include: "#returnType"
@@ -665,21 +666,23 @@ repository:
         ]
       }
       {
-        begin: "(?<!=|=\\s)(?!new)(?!.*(=|\\/\\/|\\/\\*).*\\()(?=[\\w<].*\\s+.+\\()"
-        end: "(})|(?=;)"
+        begin: "\\b(internal|public|protected|private|static|new|abstract|virtual|override|implicit|explicit|operator|async|partial)\\s+(void|[\\w<>.?*\\[\\],]+)\\s+(?=.*{\\s*)"
+        beginCaptures:
+          "1":
+            name: "storage.modifier.cs"
+          "2":
+            name: "meta.method.return-type.cs"
+            patterns: [
+              {
+                include: "#returnType"
+              }
+            ]
+        end: "}"
         endCaptures:
           "1":
             name: "punctuation.section.method.end.cs"
         name: "meta.method.cs"
         patterns: [
-          {
-            match: "\\b(internal|public|protected|private|static|new|abstract|virtual|override|implicit|explicit|operator|async|partial)\\b"
-            name: "storage.modifier.cs"
-          }
-          {
-            name: "meta.method.return-type.cs"
-            include: "#returnType"
-          }
           {
             begin: "([\\w]+)\\s*(<[\\w<>\\s,`?]*>)?\\s*\\("
             beginCaptures:
