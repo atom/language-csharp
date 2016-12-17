@@ -173,10 +173,6 @@ repository:
           "2":
             name: "punctuation.storage.type.modifier.cs"
       }
-      {
-        match: "\\b(void|class|struct|interface)\\b"
-        name: "storage.type.cs"
-      }
     ]
   type:
     patterns: [
@@ -616,7 +612,7 @@ repository:
               "1":
                 name: "entity.name.function.cs"
             end: "\\)"
-            name: "meta.method.identifier.cs"
+            name: "meta.method.identifier.cs.test-blue"
             patterns: [
               {
                 include: "#parameters"
@@ -637,6 +633,10 @@ repository:
             end: "(?=[\\w.]+\\s*\\()"
             name: "meta.method.return-type.cs"
             patterns: [
+              {
+                match: "\\bvoid\\b"
+                name: "storage.type.cs"
+              }
               {
                 include: "#builtinTypes"
               }
