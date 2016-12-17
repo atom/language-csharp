@@ -259,6 +259,7 @@ repository:
       {
         begin: "(class|struct|interface|enum)\\s+"
         end: "(?={|:|$|where)"
+        name: "meta.class.declaration.cs"
         beginCaptures:
           "1":
             name: "keyword.class.declaration.cs"
@@ -269,7 +270,6 @@ repository:
           {
             begin: "[<]\\s*"
             end: "\\s*[>]"
-            name: "punctuation.type.specifiers.cs"
             patterns: [
               {
                 include: "#typeName"
