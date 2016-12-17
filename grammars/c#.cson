@@ -7,13 +7,25 @@ foldingStartMarker: "^\\s*#\\s*region|^\\s*/\\*|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*
 foldingStopMarker: "^\\s*#\\s*endregion|^\\s*\\*/|^\\s*\\}"
 patterns: [
   {
+    include: "#attribute"
+  }
+  {
     include: "#using"
   }
   {
     include: "#namespace"
   }
   {
-    include: "#code"
+    include: "#comments"
+  }
+  {
+    include: "#type-declaration"
+  }
+  {
+    include: "#preprocessor"
+  }
+  {
+    include: "#keywords"
   }
 ]
 repository:
@@ -239,13 +251,17 @@ repository:
       }
     ]
   "type-declaration":
-    begin: "(?=\\w?[\\w\\s]*[^@]?(?:class|struct|interface|enum)\\s+\\w+)"
+    begin: "(?=(?:public|private|protected|internal|static|partial)?[^@](.*)?(?:class|struct|interface|enum)\\s+\\w+)"
     end: "}"
     endCaptures:
       "0":
         name: "punctuation.section.class.end.cs"
     name: "meta.class.cs"
     patterns: [
+      {
+        match: "\\b(public|private|protected|internal|static|partial)\\b"
+        name: "storage.modifier.cs"
+      }
       {
         include: "#comments"
       }
@@ -308,6 +324,9 @@ repository:
     ]
   "type-body":
     patterns: [
+      {
+        include: "#attribute"
+      }
       {
         include: "#type-declaration"
       }
@@ -594,9 +613,6 @@ repository:
     ]
   method:
     patterns: [
-      {
-        include: "#attribute"
-      }
       {
         begin: "(?=\\bnew\\s+)(?=[\\w<].*\\s+)(?=[^=]+\\()"
         end: "(?={|;)"
