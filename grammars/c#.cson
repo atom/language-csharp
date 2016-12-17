@@ -169,7 +169,7 @@ repository:
   builtinTypes:
     patterns: [
       {
-        match: "\\b(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort)\\s*(\\?|\\*)?\\s*"
+        match: "\\b(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort)\\s*(\\?|\\*)?\\b"
         name: "storage.value.type.cs"
         captures:
           "2":
@@ -186,14 +186,30 @@ repository:
   typeName:
     patterns: [
       {
-        match: "([\\w\\.]+\\s*<(?:[\\w\\s,\\.`\\[\\]\\*]+|\\g<1>)+>(?:\\s*\\[\\s*\\])?)"
-        comment: "generic type"
+        begin: "\\b([a-zA-Z]+[\\w\\.]*)\\s*<"
+        end: ">"
         captures:
           "1":
-            name: "storage.type.cs"
+            name: "meta.generic.class.identifier.cs"
+        patterns: [
+          {
+            match: ","
+          }
+          {
+            match: "(\\w+)"
+            captures:
+              "1":
+                name: "meta.generic.type.specifier"
+                patterns: [
+                  {
+                    include: "#type"
+                  }
+                ]
+          }
+        ]
       }
       {
-        match: "\\b([a-zA-Z]+[\\w\\.]*\\b(?:\\s*\\[\\s*\\])?\\*?)"
+        match: "\\b([a-zA-Z]+[\\w\\.]*)\\s*(?:\\s*\\[\\s*\\])?\\*?\\b"
         comment: "non-generic type"
         captures:
           "1":
