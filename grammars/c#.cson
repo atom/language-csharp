@@ -229,8 +229,13 @@ repository:
         ]
       }
       {
+        match: "\\b(I[A-Z]+[\\w\\.]*)\\s*(?:\\s*\\[\\s*\\])?\\*?\\b"
+        captures:
+          "1":
+            name: "meta.class.interface.identifier.cs"
+      }
+      {
         match: "\\b([a-zA-Z]+[\\w\\.]*)\\s*(?:\\s*\\[\\s*\\])?\\*?\\b"
-        comment: "non-generic type"
         captures:
           "1":
             name: "meta.class.identifier.cs"
