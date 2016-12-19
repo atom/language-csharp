@@ -140,6 +140,14 @@ repository:
             name: "keyword.other.var.cs"
       }
       {
+        match: "(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)"
+        captures:
+          "1":
+            patterns: [
+              {
+                include: "#type"
+              }
+            ]
       }
       {
         match: "^\\s*\\b(?!var|return|yield|throw)([\\w+<>*?,\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
