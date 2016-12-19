@@ -145,7 +145,7 @@ repository:
         match: "^\\s*\\b(?!var|return|yield|throw)([\\w+<>*?,\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
         captures:
           "1":
-            name: "storage.type.variable.cs.test-red"
+            name: "storage.type.variable.cs"
       }
     ]
   block:
@@ -710,7 +710,7 @@ repository:
                 include: "#returnType"
               }
             ]
-        end: "}"
+        end: "[};]"
         endCaptures:
           "1":
             name: "punctuation.section.method.end.cs"
@@ -775,6 +775,19 @@ repository:
               "0":
                 name: "punctuation.section.method.begin.cs"
             end: "(?=})"
+            name: "meta.method.body.cs"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+          {
+            begin: "=>"
+            beginCaptures:
+              "0":
+                name: "punctuation.section.method.begin.cs"
+            end: "(?=;)"
             name: "meta.method.body.cs"
             patterns: [
               {
