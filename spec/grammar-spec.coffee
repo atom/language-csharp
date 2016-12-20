@@ -22,7 +22,7 @@ describe "Language C# package", ->
       }
       """
 
-      expect(tokens[1][1]).toEqual value: 'byte', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'storage.type.cs']
+      expect(tokens[1][1]).toEqual value: 'byte', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'storage.value.type.cs']
       expect(tokens[1][5]).toEqual value: '//', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'comment.line.double-slash.cs']
       expect(tokens[1][6]).toEqual value: '(', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'comment.line.double-slash.cs']
 
@@ -31,15 +31,17 @@ describe "Language C# package", ->
         byte q; /*(*/
       }
       """
-      expect(tokens[1][1]).toEqual value: 'byte', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'storage.type.cs']
+      expect(tokens[1][1]).toEqual value: 'byte', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'storage.value.type.cs']
       expect(tokens[1][5]).toEqual value: '/*', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'comment.block.cs', 'punctuation.definition.comment.cs']
       expect(tokens[1][6]).toEqual value: '(', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'comment.block.cs']
 
-    it "tokenizes method definitions correctly", ->
+    fit "tokenizes method definitions correctly", ->
       {tokens} = grammar.tokenizeLine("void func()")
-      expect(tokens[0]).toEqual value: 'void ', scopes: ['source.cs']
-      expect(tokens[1]).toEqual value: 'func', scopes: ['source.cs', 'meta.method-call.cs', 'meta.method.cs']
-      expect(tokens[2]).toEqual value: '(', scopes: ['source.cs', 'meta.method-call.cs', 'punctuation.definition.method-parameters.begin.cs']
+      console.log(tokens)
+
+      expect(tokens[0][1]).toEqual value: 'void ', scopes: ['source.cs']
+      expect(tokens[0][2]).toEqual value: 'func', scopes: ['source.cs', 'meta.method-call.cs', 'meta.method.cs']
+      expect(tokens[0][3]).toEqual value: '(', scopes: ['source.cs', 'meta.method-call.cs', 'punctuation.definition.method-parameters.begin.cs']
 
       {tokens} = grammar.tokenizeLine("dictionary<int, string> func()")
       expect(tokens[5]).toEqual value: 'func', scopes: ['source.cs', 'meta.method-call.cs', 'meta.method.cs']
