@@ -30,20 +30,23 @@ patterns: [
 ]
 repository:
   using:
-    begin: "\\b(using)\\b\\s*"
-    captures:
+    begin: "\\s*\\b(using)\\b"
+    beginCaptures:
       "1":
         name: "keyword.other.using.cs"
+    end: "\\s*(?:$|;)"
     patterns: [
-      {
-        match: "\\s*static\\b"
-        name: "keyword.other.static.cs"
-      }
       {
         include: "#comments"
       }
       {
-        begin: "(\\w+)\\s*=\\s*"
+        match: "\\s*\\b(static)\\b"
+        captures:
+          1:
+            name: "keyword.other.static.cs"
+      }
+      {
+        begin: "(\\w+)(?=.*\\=)"
         beginCaptures:
           "1":
             name: "entity.name.alias.namespace.cs"
@@ -52,18 +55,26 @@ repository:
             include: "#comments"
           }
           {
-            match: "[\\w.]+"
-            name: "entity.name.type.namespace.cs"
+            begin: "\\s*\\=(?=[\\w\\s/])"
+            patterns: [
+              {
+                include: "#comments"
+              }
+              {
+                match: "[\\w.]+"
+                name: "entity.name.type.namespace.cs"
+              }
+            ]
+            end: "(?=;)"
           }
         ]
-        end: "\\s+"
+        end: ";"
       }
       {
         match: "[\\w.]+"
         name: "entity.name.type.namespace.cs"
       }
     ]
-    end: "\\s*(?:$|;)"
   namespace:
     begin: "\\s*[^@]?((namespace)\\s+([\\w.]+))"
     beginCaptures:
