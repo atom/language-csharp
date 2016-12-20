@@ -141,7 +141,7 @@ repository:
             name: "keyword.other.var.cs"
       }
       {
-        match: "(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)"
+        match: "(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*="
         captures:
           "1":
             patterns: [
@@ -824,6 +824,7 @@ repository:
       }
     ]
   parameters:
+    name: "meta.parameters.cs"
     begin: "\\b(ref|params|out)?\\s*\\b(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*(=)?"
     beginCaptures:
       "1":
