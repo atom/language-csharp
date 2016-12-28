@@ -442,6 +442,9 @@ repository:
       {
         include: "#variable"
       }
+      {
+        include: "#builtinTypes"
+      }
     ]
   comments:
     patterns: [
