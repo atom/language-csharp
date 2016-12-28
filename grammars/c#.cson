@@ -88,7 +88,6 @@ repository:
     endCaptures:
       "0":
         name: "punctuation.section.namespace.end.cs"
-    name: "meta.namespace.cs"
     patterns: [
       {
         begin: "{"
@@ -96,7 +95,6 @@ repository:
           "0":
             name: "punctuation.section.namespace.begin.cs"
         end: "(?=})"
-        name: "meta.namespace.body.cs"
         patterns: [
           {
             include: "#using"
@@ -298,7 +296,6 @@ repository:
     endCaptures:
       "0":
         name: "punctuation.section.class.end.cs"
-    name: "meta.class.cs"
     patterns: [
       {
         match: "\\b(public|private|protected|internal|static|partial)\\b"
@@ -310,7 +307,6 @@ repository:
       {
         begin: "(class|struct|interface|enum)\\s+"
         end: "(?={|:|$|where)"
-        name: "meta.class.declaration.cs"
         beginCaptures:
           "1":
             name: "keyword.class.declaration.cs"
@@ -356,7 +352,6 @@ repository:
           "0":
             name: "punctuation.section.class.begin.cs"
         end: "(?=})"
-        name: "meta.class.body.cs"
         patterns: [
           {
             include: "#type-body"
