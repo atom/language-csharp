@@ -19,6 +19,9 @@ patterns: [
     include: "#comments"
   }
   {
+    include: "#enum-declaration"
+  }
+  {
     include: "#type-declaration"
   }
   {
@@ -148,6 +151,12 @@ repository:
         captures:
           "1":
             name: "keyword.other.var.cs"
+          "2":
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
       }
       {
         match: "(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*="
@@ -291,8 +300,81 @@ repository:
         include: "#generic-constraints"
       }
     ]
+  "enum-declaration":
+    begin: "(?=(?:public|private|protected|internal)?(.*)?(?:enum)\\s+\\w+)"
+    end: "}"
+    endCaptures:
+      "0":
+        name: "punctuation.section.enum.end.cs"
+    patterns: [
+      {
+        match: "\\b(public|private|protected|internal|static)\\b"
+        name: "storage.modifier.cs"
+      }
+      {
+        include: "#comments"
+      }
+      {
+        begin: "(enum)\\s+"
+        end: "(?={)"
+        name: "meta.enum.declaration.cs"
+        beginCaptures:
+          "1":
+            name: "keyword.enum.cs"
+        patterns: [
+          {
+            match: "\\b([a-zA-Z]+\\w*)\\b"
+            captures:
+              "1":
+                name: "meta.class.enum.identifier.cs"
+          }
+        ]
+      }
+      {
+        begin: "{"
+        beginCaptures:
+          "0":
+            name: "punctuation.section.enum.begin.cs"
+        end: "(?=})"
+        patterns: [
+          {
+            include: "#comments"
+          }
+          {
+            match: ","
+          }
+          {
+            include: "#attribute"
+          }
+          {
+            begin: "\\b([a-zA-Z]+\\w*)\\b\\s*"
+            beginCaptures:
+              "1":
+                name: "entity.name.enum.cs"
+            end: "(?=,|})"
+            patterns: [
+              {
+                include: "#comments"
+              }
+              {
+                begin: "\\s*=\\s*"
+                end: "(?=,|})"
+                patterns: [
+                  {
+                    include: "#comments"
+                  }
+                  {
+                    include: "#constants"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   "type-declaration":
-    begin: "(?=(?:public|private|protected|internal|static|partial)?(.*)?(?:class|struct|interface|enum)\\s+\\w+)"
+    begin: "(?=(?:public|private|protected|internal|static|partial)?(.*)?(?:class|struct|interface)\\s+\\w+)"
     end: "}"
     endCaptures:
       "0":
@@ -306,7 +388,7 @@ repository:
         include: "#comments"
       }
       {
-        begin: "(class|struct|interface|enum)\\s+"
+        begin: "(class|struct|interface)\\s+"
         end: "(?={|:|$|where)"
         name: "meta.type.declaration.cs"
         beginCaptures:
@@ -353,6 +435,9 @@ repository:
     patterns: [
       {
         include: "#attribute"
+      }
+      {
+        include: "#enum-declaration"
       }
       {
         include: "#type-declaration"
@@ -423,6 +508,9 @@ repository:
       }
       {
         include: "#comments"
+      }
+      {
+        include: "#enum-declaration"
       }
       {
         include: "#type-declaration"
