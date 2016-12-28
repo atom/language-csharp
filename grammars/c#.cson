@@ -754,6 +754,9 @@ repository:
             ]
           }
           {
+            include: "#generic-constraints"
+          }
+          {
             begin: ":\\s*(this|base)\\s*\\("
             beginCaptures:
               "1":
