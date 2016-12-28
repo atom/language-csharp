@@ -119,6 +119,24 @@ repository:
         name: "meta.field.declaration.cs"
         patterns: [
           {
+            begin: "(?==>?)"
+            end: "(?=;|$)"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+          {
+            begin: "\\s*=\\s*"
+            end: "(?=;)"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+          {
             match: "\\s*((?:(?:private|public|volatile|internal|protected|static|readonly|const|event|extern)\\s*)*)\\s*(.+?)\\s*([\\w]+)\\s*(?=;|=)"
             captures:
               "1":
@@ -131,15 +149,6 @@ repository:
                 ]
               "3":
                 name: "entity.name.variable.cs"
-          }
-          {
-            begin: "(?==>?)"
-            end: "(?=;|$)"
-            patterns: [
-              {
-                include: "#code"
-              }
-            ]
           }
         ]
       }
