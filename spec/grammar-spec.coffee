@@ -36,18 +36,17 @@ describe "Language C# package", ->
       expect(tokens[1][6]).toEqual value: '(', scopes: ['source.cs', 'meta.class.cs', 'meta.class.body.cs', 'comment.block.cs']
 
     fit "tokenizes method definitions correctly", ->
-      {tokens} = grammar.tokenizeLine("void func()")
+      {tokens} = grammar.tokenizeLine("void func() { }")
+      expect(tokens[6]).toEqual value: 'void', scopes: ['source.cs', 'meta.method.cs', 'meta.method.return-type.cs', 'storage.type.cs']
+      expect(tokens[8]).toEqual value: 'func', scopes: ['source.cs', 'meta.method.cs', 'meta.method.identifier.cs', 'entity.name.function.declaration.cs']
+      expect(tokens[9]).toEqual value: '(', scopes: ['source.cs', 'meta.method.cs', 'meta.method.identifier.cs', 'punctuation.definition.method-parameters.begin.cs']
+
+      {tokens} = grammar.tokenizeLine("dictionary<int, string> func() { }")
       console.log(tokens)
-
-      expect(tokens[0][1]).toEqual value: 'void ', scopes: ['source.cs']
-      expect(tokens[0][2]).toEqual value: 'func', scopes: ['source.cs', 'meta.method-call.cs', 'meta.method.cs']
-      expect(tokens[0][3]).toEqual value: '(', scopes: ['source.cs', 'meta.method-call.cs', 'punctuation.definition.method-parameters.begin.cs']
-
-      {tokens} = grammar.tokenizeLine("dictionary<int, string> func()")
       expect(tokens[5]).toEqual value: 'func', scopes: ['source.cs', 'meta.method-call.cs', 'meta.method.cs']
       expect(tokens[6]).toEqual value: '(', scopes: ['source.cs', 'meta.method-call.cs', 'punctuation.definition.method-parameters.begin.cs']
 
-      {tokens} = grammar.tokenizeLine("void func(test = default_value)")
+      {tokens} = grammar.tokenizeLine("void func(test = default_value) { }")
       expect(tokens[0]).toEqual value: 'void ', scopes: ['source.cs']
       expect(tokens[1]).toEqual value: 'func', scopes: ['source.cs', 'meta.method-call.cs', 'meta.method.cs']
       expect(tokens[2]).toEqual value: '(', scopes: ['source.cs', 'meta.method-call.cs', 'punctuation.definition.method-parameters.begin.cs']

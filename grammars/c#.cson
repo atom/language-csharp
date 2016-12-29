@@ -817,10 +817,10 @@ repository:
         name: "meta.method.cs"
         patterns: [
           {
-            begin: "([\\w]+)\\s*(<[\\w<>\\s,`?]*>)?\\s*\\("
+            begin: "([\\w]+)\\s*(<[\\w<>\\s,`?]*>)?\\s*(\\()"
             beginCaptures:
               "1":
-                name: "entity.name.function.cs"
+                name: "entity.name.function.declaration.cs"
               "2":
                 name: "meta.generic.method.identifier"
                 patterns: [
@@ -839,7 +839,12 @@ repository:
                         ]
                   }
                 ]
+              "3":
+                name: "punctuation.definition.method-parameters.begin.cs"
             end: "\\)"
+            endCaptures:
+              "0":
+                name: "punctuation.definition.method-parameters.end.cs"
             name: "meta.method.identifier.cs"
             patterns: [
               {
