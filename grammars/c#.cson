@@ -16,19 +16,10 @@ patterns: [
     include: "#namespace"
   }
   {
-    include: "#comments"
+    include: "#code"
   }
   {
-    include: "#enum-declaration"
-  }
-  {
-    include: "#type-declaration"
-  }
-  {
-    include: "#preprocessor"
-  }
-  {
-    include: "#keywords"
+    include: "#method"
   }
 ]
 repository:
@@ -255,7 +246,7 @@ repository:
             match: "(\\w+([?*])?)"
             captures:
               "1":
-                name: "meta.generic.type.specifier"
+                name: "meta.generic.type.specifier.cs"
                 patterns: [
                   {
                     include: "#type"
@@ -285,7 +276,7 @@ repository:
       "1":
         name: "keyword.other.cs"
       "2":
-        name: "meta.generic.type.specifier"
+        name: "meta.generic.type.specifier.cs"
         patterns: [
           {
             include: "#type"
@@ -831,7 +822,7 @@ repository:
                     match: "(\\w+)"
                     captures:
                       "1":
-                        name: "meta.generic.type.specifier"
+                        name: "meta.generic.type.specifier.cs"
                         patterns: [
                           {
                             include: "#type"
