@@ -722,7 +722,7 @@ repository:
   attribute:
     begin: "\\["
     end: "\\]"
-    name: "meta.method.annotation.cs"
+    name: "meta.annotation.cs"
     patterns: [
       {
         include: "#constants"
@@ -830,6 +830,9 @@ repository:
                 name: "punctuation.definition.method-parameters.end.cs"
             name: "meta.method.identifier.cs"
             patterns: [
+              {
+                include: "#attribute"
+              }
               {
                 include: "#parameters"
               }
