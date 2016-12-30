@@ -152,27 +152,19 @@ repository:
           "1":
             name: "keyword.other.var.cs"
           "2":
-            patterns: [
-              {
-                include: "#code"
-              }
-            ]
-      }
-      {
-        match: "(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*="
-        captures:
-          "1":
-            patterns: [
-              {
-                include: "#type"
-              }
-            ]
+            name: "entity.name.variables.cs"
       }
       {
         match: "\\s*\\b(?!var|return|yield|throw)([\\w+<>*?,\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
         captures:
           "1":
-            name: "storage.type.variable.cs"
+            patterns: [
+              {
+                include: '#type'
+              }
+            ]
+          "2":
+            name: "entity.name.variables.cs"
       }
     ]
   block:
