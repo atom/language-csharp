@@ -912,7 +912,7 @@ repository:
     patterns: [
       {
         match: ","
-        name: "punctuation.definition.seperator.parameter.cs"
+        name: "punctuation.definition.separator.parameter.cs"
       }
       {
         include: "#code"
