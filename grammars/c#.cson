@@ -7,6 +7,9 @@ foldingStartMarker: "^\\s*#\\s*region|^\\s*/\\*|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*
 foldingStopMarker: "^\\s*#\\s*endregion|^\\s*\\*/|^\\s*\\}"
 patterns: [
   {
+    include: "#attribute"
+  }
+  {
     include: "#using"
   }
   {
@@ -15,23 +18,29 @@ patterns: [
   {
     include: "#code"
   }
+  {
+    include: "#method"
+  }
 ]
 repository:
   using:
-    begin: "^\\s*(using)\\b\\s*"
-    captures:
+    begin: "\\s*\\b(using)\\b"
+    beginCaptures:
       "1":
         name: "keyword.other.using.cs"
+    end: "\\s*(?:$|;)"
     patterns: [
-      {
-        match: "\\s*static\\b"
-        name: "keyword.other.static.cs"
-      }
       {
         include: "#comments"
       }
       {
-        begin: "(\\w+)\\s*=\\s*"
+        match: "\\s*\\b(static)\\b"
+        captures:
+          1:
+            name: "keyword.other.static.cs"
+      }
+      {
+        begin: "(\\w+)(?=.*\\=)"
         beginCaptures:
           "1":
             name: "entity.name.alias.namespace.cs"
@@ -40,20 +49,28 @@ repository:
             include: "#comments"
           }
           {
-            match: "[\\w.]+"
-            name: "entity.name.type.namespace.cs"
+            begin: "\\s*\\=(?=[\\w\\s/])"
+            patterns: [
+              {
+                include: "#comments"
+              }
+              {
+                match: "[\\w.]+"
+                name: "entity.name.type.namespace.cs"
+              }
+            ]
+            end: "(?=;)"
           }
         ]
-        end: "\\s+"
+        end: ";"
       }
       {
         match: "[\\w.]+"
         name: "entity.name.type.namespace.cs"
       }
     ]
-    end: "\\s*(?:$|;)"
   namespace:
-    begin: "^\\s*[^@]?((namespace)\\s+([\\w.]+))"
+    begin: "\\s*[^@]?((namespace)\\s+([\\w.]+))"
     beginCaptures:
       "1":
         name: "meta.namespace.identifier.cs"
@@ -65,7 +82,6 @@ repository:
     endCaptures:
       "0":
         name: "punctuation.section.namespace.end.cs"
-    name: "meta.namespace.cs"
     patterns: [
       {
         begin: "{"
@@ -73,7 +89,6 @@ repository:
           "0":
             name: "punctuation.section.namespace.begin.cs"
         end: "(?=})"
-        name: "meta.namespace.body.cs"
         patterns: [
           {
             include: "#using"
@@ -90,27 +105,10 @@ repository:
   "field-declaration":
     patterns: [
       {
-        begin: "(?=(?:(?:(?:private|public|volatile|internal|protected|static|readonly|const|event)\\s*)*)(?:[\\w\\s,<>\\[\\]]+?)(?:[\\w]+)\\s*(?:;|=|=>))"
+        begin: "(?=(?:(?:(?:private|public|volatile|internal|protected|static|readonly|const|event|extern)\\s*)*)(?:[\\w\\s?*,<>\\[\\]]+?)(?:[\\w]+)\\s*(?:;|=|=>))"
         end: "(?=;)"
+        name: "meta.field.declaration.cs"
         patterns: [
-          {
-            match: "^\\s*((?:(?:private|public|volatile|internal|protected|static|readonly|const|event)\\s*)*)\\s*(.+?)\\s*([\\w]+)\\s*(?=;|=)"
-            captures:
-              "1":
-                patterns: [
-                  {
-                    include: "#storage-modifiers"
-                  }
-                ]
-              "2":
-                patterns: [
-                  {
-                    include: "#type"
-                  }
-                ]
-              "3":
-                name: "entity.name.variable.cs"
-          }
           {
             begin: "(?==>?)"
             end: "(?=;|$)"
@@ -120,19 +118,58 @@ repository:
               }
             ]
           }
+          {
+            begin: "\\s*=\\s*"
+            end: "(?=;)"
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
+          }
+          {
+            match: "\\s*((?:(?:private|public|volatile|internal|protected|static|readonly|const|event|extern)\\s*)*)\\s*(.+?)\\s*([\\w]+)\\s*(?=;|=)"
+            captures:
+              "1":
+                name: "storage.modifier.cs"
+              "2":
+                patterns: [
+                  {
+                    include: "#type"
+                  }
+                ]
+              "3":
+                name: "entity.name.variable.cs"
+          }
         ]
       }
     ]
   variable:
     patterns: [
       {
-        match: "^\\s*\\b(var)\\s+(.*?)(?=(=|;))"
+        match: "\\s*\\b(var)\\s+(.*?)(?=(=|;))"
         captures:
           "1":
             name: "keyword.other.var.cs"
+          "2":
+            patterns: [
+              {
+                include: "#code"
+              }
+            ]
       }
       {
-        match: "^\\s*\\b(?!var|return|yield|throw)([\\w<>*?\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
+        match: "(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*="
+        captures:
+          "1":
+            patterns: [
+              {
+                include: "#type"
+              }
+            ]
+      }
+      {
+        match: "\\s*\\b(?!var|return|yield|throw)([\\w+<>*?,\\[\\]]+)\\s+([\\w]+)\\s*(?=(=(?!=)|;))"
         captures:
           "1":
             name: "storage.type.variable.cs"
@@ -157,48 +194,94 @@ repository:
         ]
       }
     ]
+  returnType:
+    patterns: [
+      {
+        match: "void"
+        name: "storage.type.cs"
+      }
+      {
+        include: "#type"
+      }
+    ]
+  type:
+    patterns: [
+      {
+        include: "#builtinTypes"
+      }
+      {
+        include: "#typeName"
+      }
+    ]
   builtinTypes:
     patterns: [
       {
-        match: "\\b(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort)\\s*(\\?|\\*)?\\s*"
+        match: "\\b(bool|byte|sbyte|char|decimal|double|enum|float|int|uint|long|ulong|short|ushort)[ ]*(\\?|\\*)?\\b"
         name: "storage.value.type.cs"
         captures:
           "2":
             name: "punctuation.storage.type.modifier.cs"
       }
       {
-        match: "\\b(dynamic|object|string)\\s*(\\*)?\\b"
+        match: "\\b(dynamic|object|string)[ ]*([*])?\\b"
         name: "storage.reference.type.cs"
         captures:
           "2":
             name: "punctuation.storage.type.modifier.cs"
       }
     ]
-  type:
+  typeName:
     patterns: [
       {
-        match: "([\\w\\.]+\\s*<(?:[\\w\\s,\\.`\\[\\]\\*]+|\\g<1>)+>(?:\\s*\\[\\s*\\])?)"
-        comment: "generic type"
+        begin: "\\b([a-zA-Z]+[\\w\\.]*)\\s*<"
+        end: ">"
         captures:
           "1":
-            name: "storage.type.cs"
+            name: "meta.generic.class.identifier.cs"
+        patterns: [
+          {
+            match: ","
+          }
+          {
+            match: "(\\w+([?*])?)"
+            captures:
+              "1":
+                name: "meta.generic.type.specifier.cs"
+                patterns: [
+                  {
+                    include: "#type"
+                  }
+                ]
+          }
+        ]
       }
       {
-        match: "\\b([a-zA-Z]+[\\w\\.]*\\b(?:\\s*\\[\\s*\\])?\\*?)"
-        comment: "non-generic type"
+        match: "\\b(I[A-Z]+[\\w\\.]*)\\s*(?:\\s*\\[\\s*\\])?\\*?\\b"
         captures:
           "1":
-            name: "storage.type.cs"
+            name: "meta.class.interface.identifier.cs"
+      }
+      {
+        match: "\\b([a-zA-Z]+[\\w\\.]*)\\s*(?:\\s*\\[\\s*\\])?\\*?\\b"
+        captures:
+          "1":
+            name: "meta.class.identifier.cs"
       }
     ]
   "generic-constraints":
-    begin: "(where)\\s+(\\w+)\\s*:"
+    name: "meta.generic.constraints.cs"
+    begin: "(where)\\s+(\\w+([?*])?)\\s*:"
     end: "(?=where|{|$)"
     beginCaptures:
       "1":
         name: "keyword.other.cs"
       "2":
-        name: "storage.type.cs"
+        name: "meta.generic.type.specifier.cs"
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
     patterns: [
       {
         match: "\\b(class|struct)\\b"
@@ -217,30 +300,103 @@ repository:
         include: "#generic-constraints"
       }
     ]
-  "type-declaration":
-    begin: "(?=\\w?[\\w\\s]*[^@]?(?:class|struct|interface|enum)\\s+\\w+)"
+  "enum-declaration":
+    begin: "(?=(?:public|private|protected|internal)?(.*)?(?:enum)\\s+\\w+)"
     end: "}"
     endCaptures:
       "0":
-        name: "punctuation.section.class.end.cs"
-    name: "meta.class.cs"
+        name: "punctuation.section.enum.end.cs"
     patterns: [
       {
-        include: "#storage-modifiers"
+        match: "\\b(public|private|protected|internal|static)\\b"
+        name: "storage.modifier.cs"
       }
       {
         include: "#comments"
       }
       {
-        begin: "(class|struct|interface|enum)\\s+"
-        end: "(?={|:|$|where)"
-        name: "meta.class.identifier.cs"
+        begin: "(enum)\\s+"
+        end: "(?={)"
+        name: "meta.enum.declaration.cs"
         beginCaptures:
           "1":
-            name: "storage.modifier.cs"
+            name: "keyword.enum.cs"
         patterns: [
           {
-            include: "#type"
+            match: "\\b([a-zA-Z]+\\w*)\\b"
+            captures:
+              "1":
+                name: "meta.class.enum.identifier.cs"
+          }
+        ]
+      }
+      {
+        begin: "{"
+        beginCaptures:
+          "0":
+            name: "punctuation.section.enum.begin.cs"
+        end: "(?=})"
+        patterns: [
+          {
+            include: "#comments"
+          }
+          {
+            match: ","
+          }
+          {
+            include: "#attribute"
+          }
+          {
+            begin: "\\b([a-zA-Z]+\\w*)\\b\\s*"
+            beginCaptures:
+              "1":
+                name: "entity.name.enum.cs"
+            end: "(?=,|})"
+            patterns: [
+              {
+                include: "#comments"
+              }
+              {
+                begin: "\\s*=\\s*"
+                end: "(?=,|})"
+                patterns: [
+                  {
+                    include: "#comments"
+                  }
+                  {
+                    include: "#constants"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  "type-declaration":
+    begin: "(?=(?:public|private|protected|internal|static|partial)?(.*)?(?:class|struct|interface)\\s+\\w+)"
+    end: "}"
+    endCaptures:
+      "0":
+        name: "punctuation.section.class.end.cs"
+    patterns: [
+      {
+        match: "\\b(public|private|protected|internal|static|partial)\\b"
+        name: "storage.modifier.cs"
+      }
+      {
+        include: "#comments"
+      }
+      {
+        begin: "(class|struct|interface)\\s+"
+        end: "(?={|:|$|where)"
+        name: "meta.type.declaration.cs"
+        beginCaptures:
+          "1":
+            name: "keyword.class.cs"
+        patterns: [
+          {
+            include: "#typeName"
           }
         ]
       }
@@ -249,7 +405,7 @@ repository:
         end: "(?={|where)"
         patterns: [
           {
-            include: "#type"
+            include: "#typeName"
           }
           {
             match: "([\\w<>]+)\\s*"
@@ -268,7 +424,6 @@ repository:
           "0":
             name: "punctuation.section.class.begin.cs"
         end: "(?=})"
-        name: "meta.class.body.cs"
         patterns: [
           {
             include: "#type-body"
@@ -278,6 +433,12 @@ repository:
     ]
   "type-body":
     patterns: [
+      {
+        include: "#attribute"
+      }
+      {
+        include: "#enum-declaration"
+      }
       {
         include: "#type-declaration"
       }
@@ -291,14 +452,57 @@ repository:
         include: "#method"
       }
       {
-        include: "#storage-modifiers"
-      }
-      {
         include: "#code"
       }
     ]
+  typeOperator:
+    patterns: [
+      {
+        include: "#keywordTypeOperator"
+      }
+      {
+        include: "#castTypeOperator"
+      }
+      {
+        include: "#functionTypeOperator"
+      }
+    ]
+  castTypeOperator:
+    match: "\\((\\w+[?*,<>\\[\\]]*)\\)"
+    captures:
+      "1":
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
+  functionTypeOperator:
+    match: "\\b(typeof|sizeof)\\s*\\((\\w+[?*,<>\\[\\]]*)\\)"
+    captures:
+      "1":
+        name: "keyword.operator.cs"
+      "2":
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
+  keywordTypeOperator:
+    match: "\\b(is|as|new)\\s+(\\w+[?*,<>\\[\\]]*)"
+    captures:
+      "1":
+        name: "keyword.operator.cs"
+      "2":
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
   code:
     patterns: [
+      {
+        include: "#typeOperator"
+      }
       {
         include: "#block"
       }
@@ -306,16 +510,13 @@ repository:
         include: "#comments"
       }
       {
+        include: "#enum-declaration"
+      }
+      {
         include: "#type-declaration"
       }
       {
-        include: "#variable"
-      }
-      {
         include: "#constants"
-      }
-      {
-        include: "#storage-modifiers"
       }
       {
         include: "#keywords"
@@ -327,10 +528,10 @@ repository:
         include: "#method-call"
       }
       {
-        include: "#builtinTypes"
+        include: "#variable"
       }
       {
-        include: "#documentation"
+        include: "#builtinTypes"
       }
     ]
   comments:
@@ -353,7 +554,7 @@ repository:
         captures:
           "0":
             name: "punctuation.definition.comment.cs"
-        end: "\\*/\\n?"
+        end: "\\*/"
         name: "comment.block.cs"
       }
       {
@@ -518,11 +719,11 @@ repository:
         name: "keyword.linq.cs"
       }
       {
-        match: "\\b(new|is|as|using|checked|unchecked|typeof|sizeof|override|readonly|stackalloc|nameof)\\b"
+        match: "\\b(using|checked|unchecked|override|readonly|stackalloc|nameof)\\b"
         name: "keyword.operator.cs"
       }
       {
-        match: "\\b(event|delegate|fixed|add|remove|set|get|value|alias|global)\\b"
+        match: "\\b(event|delegate|fixed|add|remove|set|get|value|alias|global|extern)\\b"
         name: "keyword.other.cs"
       }
     ]
@@ -545,15 +746,12 @@ repository:
       }
     ]
   "property-declaration":
-    begin: "^\\s*(?!.*\\b(?:class|interface|struct)\\b)((?:\\w+\\s+)*?)(?!(?:private|public|internal|protected|static|new|virtual|override))(\\w.+?)\\s+(\\w+)\\s*(?={|$)"
+    begin: "\\s*(?!.*\\b(?:class|interface|struct)\\b)((?:\\w+\\s+)*?)(?!(?:private|public|internal|protected|static|new|virtual|override))(\\w.+?)\\s+(\\w+)\\s*(?={|$)"
     end: "}|;|$"
     beginCaptures:
       "1":
-        patterns: [
-          {
-            include: "#storage-modifiers"
-          }
-        ]
+        match: "\\b(private|public|internal|protected|static|new|virtual|override)\\b"
+        name: "storage.modifier.cs"
       "2":
         patterns: [
           {
@@ -580,9 +778,6 @@ repository:
   method:
     patterns: [
       {
-        include: "#attribute"
-      }
-      {
         begin: "(?=\\bnew\\s+)(?=[\\w<].*\\s+)(?=[^=]+\\()"
         end: "(?={|;)"
         name: "meta.new-object.cs"
@@ -593,25 +788,54 @@ repository:
         ]
       }
       {
-        begin: "(?<!=|=\\s)(?!new)(?!.*(=|\\/\\/|\\/\\*).*\\()(?=[\\w<].*\\s+.+\\()"
-        end: "(})|(?=;)"
+        match: "\\b(internal|public|protected|private|static|new|abstract|virtual|override|implicit|explicit|operator|async|partial)\\b"
+        name: "storage.modifier.cs"
+      }
+      {
+        begin: "(void|[\\w<>.?*\\[\\],]+)\\s*(?=.*)"
+        beginCaptures:
+          "1":
+            name: "meta.method.return-type.cs"
+            patterns: [
+              {
+                include: "#returnType"
+              }
+            ]
+        end: "[};]"
         endCaptures:
           "1":
             name: "punctuation.section.method.end.cs"
         name: "meta.method.cs"
         patterns: [
           {
-            include: "#storage-modifiers"
-          }
-          {
-            include: "#builtinTypes"
-          }
-          {
-            begin: "([\\w]+\\s*(?:<[\\w<>\\s,`?]*>)?)\\s*\\("
+            begin: "([\\w]+)\\s*(<[\\w<>\\s,`?]*>)?\\s*(\\()"
             beginCaptures:
               "1":
-                name: "entity.name.function.cs"
+                name: "entity.name.function.declaration.cs"
+              "2":
+                name: "meta.generic.method.identifier"
+                patterns: [
+                  {
+                    match: ","
+                  }
+                  {
+                    match: "(\\w+)"
+                    captures:
+                      "1":
+                        name: "meta.generic.type.specifier.cs"
+                        patterns: [
+                          {
+                            include: "#type"
+                          }
+                        ]
+                  }
+                ]
+              "3":
+                name: "punctuation.definition.method-parameters.begin.cs"
             end: "\\)"
+            endCaptures:
+              "0":
+                name: "punctuation.definition.method-parameters.end.cs"
             name: "meta.method.identifier.cs"
             patterns: [
               {
@@ -623,24 +847,10 @@ repository:
               {
                 include: "#comments"
               }
-              {
-                include: "#builtinTypes"
-              }
             ]
           }
           {
-            begin: "(?=\\w.*\\s+[\\w.]+\\s*\\()"
-            end: "(?=[\\w.]+\\s*\\()"
-            name: "meta.method.return-type.cs"
-            patterns: [
-              {
-                match: "\\bvoid\\b"
-                name: "storage.type.cs"
-              }
-              {
-                include: "#builtinTypes"
-              }
-            ]
+            include: "#generic-constraints"
           }
           {
             begin: ":\\s*(this|base)\\s*\\("
@@ -659,11 +869,11 @@ repository:
             include: "#comments"
           }
           {
-            begin: "=>"
+            begin: "{"
             beginCaptures:
               "0":
                 name: "punctuation.section.method.begin.cs"
-            end: "(?=;)"
+            end: "(?=})"
             name: "meta.method.body.cs"
             patterns: [
               {
@@ -672,11 +882,11 @@ repository:
             ]
           }
           {
-            begin: "{"
+            begin: "=>"
             beginCaptures:
               "0":
                 name: "punctuation.section.method.begin.cs"
-            end: "(?=})"
+            end: "(?=;)"
             name: "meta.method.body.cs"
             patterns: [
               {
@@ -709,12 +919,17 @@ repository:
       }
     ]
   parameters:
+    name: "meta.parameters.cs"
     begin: "\\b(ref|params|out)?\\s*\\b(\\w+(?:\\s*<.*?>)?(?:\\s*\\*)*(?:\\s*\\?)?(?:\\s*\\[.*?\\])?)\\s+(@?\\w+)\\s*(=)?"
     beginCaptures:
       "1":
-        name: "storage.type.modifier.cs"
+        name: "storage.modifier.cs"
       "2":
-        name: "storage.type.generic.cs"
+        patterns: [
+          {
+            include: "#type"
+          }
+        ]
       "3":
         name: "variable.parameter.function.cs"
       "4":
@@ -746,6 +961,3 @@ repository:
         name: "meta.preprocessor.cs"
       }
     ]
-  "storage-modifiers":
-    match: "\\b(event|delegate|internal|public|protected|private|static|const|new|sealed|abstract|virtual|override|extern|unsafe|readonly|volatile|implicit|explicit|operator|async|partial|alias)\\b"
-    name: "storage.modifier.cs"
