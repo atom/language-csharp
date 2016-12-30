@@ -42,7 +42,7 @@ describe "Language C# package", ->
       expect(tokens[3]).toEqual value: '(', scopes: ['source.cs', 'meta.method.cs', 'meta.method.identifier.cs', 'punctuation.definition.method-parameters.begin.cs']
 
       {tokens} = grammar.tokenizeLine("dictionary<int, string> func() { }")
-      expect(tokens[0]).toEqual value: 'dictionary', scopes: ['source.cs', 'meta.method.cs', 'meta.method.return-type.cs', 'meta.generic.class.identifier.cs']
+      expect(tokens[0]).toEqual value: 'dictionary', scopes: ['source.cs', 'meta.method.cs', 'meta.method.return-type.cs', 'entity.name.generic.class.cs']
       expect(tokens[2]).toEqual value: 'int', scopes: ['source.cs', 'meta.method.cs', 'meta.method.return-type.cs', 'meta.generic.type.specifier.cs', 'storage.value.type.cs']
       expect(tokens[6]).toEqual value: 'func', scopes: ['source.cs', 'meta.method.cs', 'meta.method.identifier.cs', 'entity.name.function.declaration.cs']
       expect(tokens[7]).toEqual value: '(', scopes: ['source.cs', 'meta.method.cs', 'meta.method.identifier.cs', 'punctuation.definition.method-parameters.begin.cs']
