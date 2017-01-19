@@ -291,6 +291,9 @@ repository:
       {
         include: "#generic-constraints"
       }
+      {
+        include: "#comments"
+      }
     ]
   "enum-declaration":
     begin: "(?=(?:public|private|protected|internal)?(.*)?(?:enum)\\s+\\w+)"
@@ -404,6 +407,9 @@ repository:
             captures:
               "1":
                 name: "storage.type.cs"
+          }
+          {
+            include: "#comments"
           }
         ]
       }
