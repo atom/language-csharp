@@ -369,14 +369,14 @@ repository:
       }
     ]
   "type-declaration":
-    begin: "(?=(?:public|private|protected|internal|static|partial)?(.*)?(?:class|struct|interface)\\s+\\w+)"
+    begin: "(?=(?:public|private|protected|internal|static|partial|abstract|sealed|new)?(.*)?(?:class|struct|interface)\\s+\\w+)"
     end: "}"
     endCaptures:
       "0":
         name: "punctuation.section.class.end.cs"
     patterns: [
       {
-        match: "\\b(public|private|protected|internal|static|partial)\\b"
+        match: "\\b(public|private|protected|internal|static|partial|abstract|sealed|new)\\b"
         name: "storage.modifier.cs"
       }
       {
