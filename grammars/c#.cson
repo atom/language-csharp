@@ -536,10 +536,10 @@ repository:
     patterns: [
       {
         begin: "///"
-        captures:
+        beginCaptures:
           "0":
             name: "punctuation.definition.comment.cs"
-        end: "$\\n?"
+        end: "$"
         name: "comment.block.documentation.cs"
         patterns: [
           {
@@ -549,18 +549,21 @@ repository:
       }
       {
         begin: "/\\*"
-        captures:
+        beginCaptures:
           "0":
             name: "punctuation.definition.comment.cs"
         end: "\\*/"
+        endCaptures:
+          "0":
+            name: "punctuation.definition.comment.cs"
         name: "comment.block.cs"
       }
       {
         begin: "//"
-        captures:
+        beginCaptures:
           "1":
             name: "punctuation.definition.comment.cs"
-        end: "$\\n?"
+        end: "$"
         name: "comment.line.double-slash.cs"
       }
     ]
