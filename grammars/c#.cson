@@ -539,7 +539,7 @@ repository:
         captures:
           "0":
             name: "punctuation.definition.comment.cs"
-        end: "$\\n?"
+        end: "$"
         name: "comment.block.documentation.cs"
         patterns: [
           {
@@ -560,7 +560,7 @@ repository:
         captures:
           "1":
             name: "punctuation.definition.comment.cs"
-        end: "$\\n?"
+        end: "$"
         name: "comment.line.double-slash.cs"
       }
     ]

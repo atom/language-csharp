@@ -166,10 +166,10 @@ describe "Language C# package", ->
             else
               expect(token[0].value).toBe(directive)
 
-            expect(token[token.length - 3].value).toBe('//')
-            expect(token[token.length - 3].scopes).toContain('comment.line.double-slash.cs')
-            expect(token[token.length - 2].value).toBe(' A line comment')
+            expect(token[token.length - 2].value).toBe('//')
             expect(token[token.length - 2].scopes).toContain('comment.line.double-slash.cs')
+            expect(token[token.length - 1].value).toBe(' A line comment')
+            expect(token[token.length - 1].scopes).toContain('comment.line.double-slash.cs')
 
   describe "C# Script grammar", ->
     it "parses the grammar", ->
