@@ -182,9 +182,3 @@ describe "Language C# package", ->
       grammar = atom.grammars.grammarForScopeName("source.cake")
       expect(grammar).toBeDefined()
       expect(grammar.scopeName).toBe "source.cake"
-
-  describe "NAnt Build File grammar", ->
-    it "parses the grammar", ->
-      grammar = atom.grammars.grammarForScopeName("source.nant-build")
-      expect(grammar).toBeDefined()
-      expect(grammar.scopeName).toBe "source.nant-build"
