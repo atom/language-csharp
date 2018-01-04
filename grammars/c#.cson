@@ -919,6 +919,10 @@ repository:
         name: "punctuation.definition.separator.parameter.cs"
       }
       {
+          match: "\\b(ref|out)\\b"
+          name: "storage.modifier.cs"
+      }
+      {
         include: "#code"
       }
     ]
