@@ -905,7 +905,7 @@ repository:
     begin: "([\\w$]+)\\s*(\\()"
     beginCaptures:
       "1":
-        name: "meta.method.cs"
+        name: "entity.name.function.cs"
       "2":
         name: "punctuation.definition.method-parameters.begin.cs"
     end: "\\)"
