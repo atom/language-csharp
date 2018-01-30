@@ -712,7 +712,7 @@ repository:
   keywords:
     patterns: [
       {
-        match: "\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await|when)\\b"
+        match: "\\b(if|else|while|for|foreach|in|do|return|continue|break|switch|case|default|goto|throw|try|catch|finally|lock|yield|await|async|when)\\b"
         name: "keyword.control.cs"
       }
       {
