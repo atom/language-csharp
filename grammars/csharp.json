@@ -3717,7 +3717,7 @@
 					}
 				},
 				{
-					"name": "storage.type.cs",
+					"name": "entity.name.type.cs",
 					"match": "[_[:alpha:]][_[:alnum:]]*"
 				}
 			]
