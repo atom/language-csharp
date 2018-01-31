@@ -4,8 +4,6 @@
 
 Adds syntax highlighting and snippets to C# files in Atom.
 
-Originally [converted](http://flight-manual.atom.io/hacking-atom/sections/converting-from-textmate)
-from the [C# TextMate bundle](https://github.com/wintermi/csharp-tmbundle).
+Heavily based on the [.NET Foundation's C# grammar](https://github.com/dotnet/csharp-tmLanguage)
 
-Contributions are greatly appreciated. Please fork this repository and open a
-pull request to add snippets, make grammar tweaks, etc.
+Contributions and issues with the the grammar should be raised upstream. 
