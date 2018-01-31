@@ -7,14 +7,14 @@ describe("Language C# package", () => {
     it("parses the grammar", () => {
       const grammar = atom.grammars.grammarForScopeName("source.csx")
       expect(grammar).toBeDefined()
-      return expect(grammar.scopeName).toBe("source.csx")
+      expect(grammar.scopeName).toBe("source.csx")
     })
   )
 
-  return describe("C# Cake grammar", () =>
+  describe("C# Cake grammar", () =>
     it("parses the grammar", () => {
       const grammar = atom.grammars.grammarForScopeName("source.cake")
-      return expect(grammar).toBeDefined()
+      expect(grammar).toBeDefined()
     })
   )
 })
