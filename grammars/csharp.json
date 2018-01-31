@@ -929,7 +929,7 @@
 					"name": "keyword.other.where.cs"
 				},
 				"2": {
-					"name": "storage.type.cs"
+					"name": "entity.name.type.type-parameter.cs"
 				},
 				"3": {
 					"name": "punctuation.separator.colon.cs"
