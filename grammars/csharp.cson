@@ -856,7 +856,7 @@ repository:
       "1":
         name: "keyword.other.where.cs"
       "2":
-        name: "storage.type.cs"
+        name: "entity.name.type.type-parameter.cs"
       "3":
         name: "punctuation.separator.colon.cs"
     end: "(?=\\{|where|;|=>)"
@@ -3722,7 +3722,7 @@ repository:
             name: "storage.type.cs"
       }
       {
-        name: "storage.type.cs"
+        name: "entity.name.type.cs"
         match: "[_[:alpha:]][_[:alnum:]]*"
       }
     ]
