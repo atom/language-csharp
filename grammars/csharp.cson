@@ -919,11 +919,11 @@ repository:
           }
         ]
       "6":
-        name: "entity.name.variable.field.cs"
+        name: "variable.field.cs"
     end: "(?=;)"
     patterns: [
       {
-        name: "entity.name.variable.field.cs"
+        name: "variable.field.cs"
         match: "[_[:alpha:]][_[:alnum:]]*"
       }
       {
@@ -1829,7 +1829,7 @@ repository:
                   }
                 ]
               "7":
-                name: "entity.name.variable.local.cs"
+                name: "variable.local.cs"
               "8":
                 name: "keyword.control.loop.in.cs"
           }
@@ -1947,7 +1947,7 @@ repository:
                   }
                 ]
               "6":
-                name: "entity.name.variable.local.cs"
+                name: "variable.local.cs"
           }
         ]
       }
@@ -2108,11 +2108,11 @@ repository:
           }
         ]
       "8":
-        name: "entity.name.variable.local.cs"
+        name: "variable.local.cs"
     end: "(?=;|\\))"
     patterns: [
       {
-        name: "entity.name.variable.local.cs"
+        name: "variable.local.cs"
         match: "[_[:alpha:]][_[:alnum:]]*"
       }
       {
@@ -2158,11 +2158,11 @@ repository:
           }
         ]
       "7":
-        name: "entity.name.variable.local.cs"
+        name: "variable.local.cs"
     end: "(?=;)"
     patterns: [
       {
-        name: "entity.name.variable.local.cs"
+        name: "variable.local.cs"
         match: "[_[:alpha:]][_[:alnum:]]*"
       }
       {
@@ -2314,7 +2314,7 @@ repository:
           }
         ]
       "7":
-        name: "entity.name.variable.local.cs"
+        name: "variable.local.cs"
   "declaration-expression-tuple":
     match: '''
       (?x) # e.g. int x OR var x
@@ -3145,7 +3145,7 @@ repository:
           }
         ]
       "7":
-        name: "entity.name.variable.parameter.cs"
+        name: "variable.parameter.cs"
   "argument-list":
     begin: "\\("
     beginCaptures:
@@ -3190,7 +3190,7 @@ repository:
     begin: "([_[:alpha:]][_[:alnum:]]*)\\s*(:)"
     beginCaptures:
       "1":
-        name: "entity.name.variable.parameter.cs"
+        name: "variable.parameter.cs"
       "2":
         name: "punctuation.separator.colon.cs"
     end: "(?=(,|\\)|\\]))"
@@ -3483,7 +3483,7 @@ repository:
           "1":
             name: "storage.modifier.cs"
           "2":
-            name: "entity.name.variable.parameter.cs"
+            name: "variable.parameter.cs"
           "3":
             name: "keyword.operator.arrow.cs"
         end: "(?=\\)|;|}|,)"
@@ -3611,7 +3611,7 @@ repository:
           }
         ]
       "7":
-        name: "entity.name.variable.parameter.cs"
+        name: "variable.parameter.cs"
   type:
     name: "meta.type.cs"
     patterns: [
