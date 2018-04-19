@@ -983,7 +983,7 @@ repository:
           }
         ]
       "8":
-        name: "entity.name.variable.property.cs"
+        name: "variable.other.cs"
     end: "(?<=\\})|(?=;)"
     patterns: [
       {
