@@ -14,6 +14,6 @@ def convert(string):
   result = re.sub(r'\?<([a-zA-Z-_]*)>', lambda x: x.group().replace('-', ''), string)
   return re.sub(r'\\\\g<([a-zA-Z-]*)>', lambda x: x.group().replace('-', ''), result)
 
-content = read('csharp.cson')
+content = read('../grammars/csharp.cson')
 updated = convert(content)
-write('csharp-new.cson', updated)
+write('../grammars/csharp.cson', updated)
