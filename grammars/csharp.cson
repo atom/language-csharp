@@ -566,16 +566,16 @@ repository:
     begin: '''
       (?x)
       (?:\\b(delegate)\\b)\\s+
-      (?<typename>
+      (?<type-name>
         (?:
           (?:ref\\s+(?:readonly\\s+)?)?   # ref return
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -855,7 +855,7 @@ repository:
       "1":
         name: "keyword.other.where.cs"
       "2":
-        name: "entity.name.type.type-parameter.cs"
+        name: "storage.type.cs"
       "3":
         name: "punctuation.separator.colon.cs"
     end: "(?=\\{|where|;|=>)"
@@ -891,15 +891,15 @@ repository:
   "field-declaration":
     begin: '''
       (?x)
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -917,11 +917,11 @@ repository:
           }
         ]
       "6":
-        name: "variable.other.cs"
+        name: "entity.name.variable.field.cs"
     end: "(?=;)"
     patterns: [
       {
-        name: "variable.other.cs"
+        name: "entity.name.variable.field.cs"
         match: "@?[_[:alpha:]][_[:alnum:]]*"
       }
       {
@@ -945,17 +945,17 @@ repository:
       # or other declarations as properties.
       (?![[:word:][:space:]]*\\b(?:class|interface|struct|enum|event)\\b)
       
-      (?<returntype>
-        (?<typename>
+      (?<return-type>
+        (?<type-name>
           (?:
             (?:ref\\s+(?:readonly\\s+)?)?   # ref return
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<nameandtypeargs> # identifier + type arguments (if any)
+              (?<name-and-type-args> # identifier + type arguments (if any)
                 \\g<identifier>\\s*
-                (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
               (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
@@ -963,8 +963,8 @@ repository:
           )
         )\\s+
       )
-      (?<interfacename>\\g<typename>\\s*\\.\\s*)?
-      (?<propertyname>\\g<identifier>)\\s*
+      (?<interface-name>\\g<type-name>\\s*\\.\\s*)?
+      (?<property-name>\\g<identifier>)\\s*
       (?=\\{|=>|$)
     '''
     beginCaptures:
@@ -984,7 +984,7 @@ repository:
           }
         ]
       "8":
-        name: "variable.other.cs"
+        name: "entity.name.variable.property.cs"
     end: "(?<=\\})|(?=;)"
     patterns: [
       {
@@ -1006,17 +1006,17 @@ repository:
   "indexer-declaration":
     begin: '''
       (?x)
-      (?<returntype>
-        (?<typename>
+      (?<return-type>
+        (?<type-name>
           (?:
             (?:ref\\s+(?:readonly\\s+)?)?   # ref return
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<nameandtypeargs> # identifier + type arguments (if any)
+              (?<name-and-type-args> # identifier + type arguments (if any)
                 \\g<identifier>\\s*
-                (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
               (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
@@ -1024,8 +1024,8 @@ repository:
           )
         )\\s+
       )
-      (?<interfacename>\\g<typename>\\s*\\.\\s*)?
-      (?<indexername>this)\\s*
+      (?<interface-name>\\g<type-name>\\s*\\.\\s*)?
+      (?<indexer-name>this)\\s*
       (?=\\[)
     '''
     beginCaptures:
@@ -1068,16 +1068,16 @@ repository:
     begin: '''
       (?x)
       \\b(event)\\b\\s*
-      (?<returntype>
-        (?<typename>
+      (?<return-type>
+        (?<type-name>
           (?:
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<nameandtypeargs> # identifier + type arguments (if any)
+              (?<name-and-type-args> # identifier + type arguments (if any)
                 \\g<identifier>\\s*
-                (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
               (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
@@ -1085,8 +1085,8 @@ repository:
           )
         )\\s+
       )
-      (?<interfacename>\\g<typename>\\s*\\.\\s*)?
-      (?<eventnames>\\g<identifier>(?:\\s*,\\s*\\g<identifier>)*)\\s*
+      (?<interface-name>\\g<type-name>\\s*\\.\\s*)?
+      (?<event-names>\\g<identifier>(?:\\s*,\\s*\\g<identifier>)*)\\s*
       (?=\\{|;|$)
     '''
     beginCaptures:
@@ -1204,17 +1204,17 @@ repository:
   "method-declaration":
     begin: '''
       (?x)
-      (?<returntype>
-        (?<typename>
+      (?<return-type>
+        (?<type-name>
           (?:
             (?:ref\\s+(?:readonly\\s+)?)?   # ref return
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<nameandtypeargs> # identifier + type arguments (if any)
+              (?<name-and-type-args> # identifier + type arguments (if any)
                 \\g<identifier>\\s*
-                (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
               (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
@@ -1222,7 +1222,7 @@ repository:
           )
         )\\s+
       )
-      (?<interfacename>\\g<typename>\\s*\\.\\s*)?
+      (?<interface-name>\\g<type-name>\\s*\\.\\s*)?
       (\\g<identifier>)\\s*
       (<([^<>]+)>)?\\s*
       (?=\\()
@@ -1345,23 +1345,23 @@ repository:
   "operator-declaration":
     begin: '''
       (?x)
-      (?<typename>
+      (?<type-name>
         (?:
           (?:ref\\s+(?:readonly\\s+)?)?   # ref return
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
         )
       )\\s*
-      (?<operatorkeyword>(?:\\b(?:operator)))\\s*
+      (?<operator-keyword>(?:\\b(?:operator)))\\s*
       (?<operator>(?:\\+|-|\\*|/|%|&|\\||\\^|\\<\\<|\\>\\>|==|!=|\\>|\\<|\\>=|\\<=|!|~|\\+\\+|--|true|false))\\s*
       (?=\\()
     '''
@@ -1394,18 +1394,18 @@ repository:
   "conversion-operator-declaration":
     begin: '''
       (?x)
-      (?<explicitorimplicitkeyword>(?:\\b(?:explicit|implicit)))\\s*
-      (?<operatorkeyword>(?:\\b(?:operator)))\\s*
-      (?<typename>
+      (?<explicit-or-implicit-keyword>(?:\\b(?:explicit|implicit)))\\s*
+      (?<operator-keyword>(?:\\b(?:operator)))\\s*
+      (?<type-name>
         (?:
           (?:ref\\s+(?:readonly\\s+)?)?   # ref return
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -1795,15 +1795,15 @@ repository:
               (?x)
               (?:
                 (\\bvar\\b)|
-                (?<typename>
+                (?<type-name>
                   (?:
                     (?:
                       (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-                      (?<nameandtypeargs> # identifier + type arguments (if any)
+                      (?<name-and-type-args> # identifier + type arguments (if any)
                         \\g<identifier>\\s*
-                        (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                        (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
                       )
-                      (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+                      (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
                       (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
                     )
                     (?:\\s*\\?\\s*)? # nullable suffix?
@@ -1824,7 +1824,7 @@ repository:
                   }
                 ]
               "7":
-                name: "variable.other.cs"
+                name: "entity.name.variable.local.cs"
               "8":
                 name: "keyword.control.loop.in.cs"
           }
@@ -1916,15 +1916,15 @@ repository:
           {
             match: '''
               (?x)
-              (?<typename>
+              (?<type-name>
                 (?:
                   (?:
                     (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-                    (?<nameandtypeargs> # identifier + type arguments (if any)
+                    (?<name-and-type-args> # identifier + type arguments (if any)
                       \\g<identifier>\\s*
-                      (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                      (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
                     )
-                    (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+                    (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
                     (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
                   )
                   (?:\\s*\\?\\s*)? # nullable suffix?
@@ -1941,7 +1941,7 @@ repository:
                   }
                 ]
               "6":
-                name: "variable.other.cs"
+                name: "entity.name.variable.local.cs"
           }
         ]
       }
@@ -2069,16 +2069,16 @@ repository:
       (?x)
       (?:
         (?:(\\bref)\\s+(?:(\\breadonly)\\s+)?)?(\\bvar\\b)| # ref local
-        (?<typename>
+        (?<type-name>
           (?:
             (?:ref\\s+(?:readonly\\s+)?)?   # ref local
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<nameandtypeargs> # identifier + type arguments (if any)
+              (?<name-and-type-args> # identifier + type arguments (if any)
                 \\g<identifier>\\s*
-                (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
               (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2087,6 +2087,7 @@ repository:
         )
       )\\s+
       (\\g<identifier>)\\s*
+      (?!=>)
       (?=,|;|=|\\))
     '''
     beginCaptures:
@@ -2103,11 +2104,11 @@ repository:
           }
         ]
       "9":
-        name: "variable.other.cs"
+        name: "entity.name.variable.local.cs"
     end: "(?=;|\\))"
     patterns: [
       {
-        name: "variable.other.cs"
+        name: "entity.name.variable.local.cs"
         match: "@?[_[:alpha:]][_[:alnum:]]*"
       }
       {
@@ -2123,16 +2124,16 @@ repository:
   "local-constant-declaration":
     begin: '''
       (?x)
-      (?<constkeyword>\\b(?:const)\\b)\\s*
-      (?<typename>
+      (?<const-keyword>\\b(?:const)\\b)\\s*
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2152,11 +2153,11 @@ repository:
           }
         ]
       "7":
-        name: "variable.other.cs"
+        name: "entity.name.variable.local.cs"
     end: "(?=;)"
     patterns: [
       {
-        name: "variable.other.cs"
+        name: "entity.name.variable.local.cs"
         match: "@?[_[:alpha:]][_[:alnum:]]*"
       }
       {
@@ -2278,15 +2279,15 @@ repository:
       (?x) # e.g. int x OR var x
       (?:
         \\b(var)\\b|
-        (?<typename>
+        (?<type-name>
           (?:
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<nameandtypeargs> # identifier + type arguments (if any)
+              (?<name-and-type-args> # identifier + type arguments (if any)
                 \\g<identifier>\\s*
-                (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
               (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2307,21 +2308,21 @@ repository:
           }
         ]
       "7":
-        name: "variable.other.cs"
+        name: "entity.name.variable.local.cs"
   "declaration-expression-tuple":
     match: '''
       (?x) # e.g. int x OR var x
       (?:
         \\b(var)\\b|
-        (?<typename>
+        (?<type-name>
           (?:
             (?:
               (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-              (?<nameandtypeargs> # identifier + type arguments (if any)
+              (?<name-and-type-args> # identifier + type arguments (if any)
                 \\g<identifier>\\s*
-                (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+                (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
               )
-              (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+              (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
               (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
             )
             (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2440,7 +2441,7 @@ repository:
     ]
   interpolation:
     name: "meta.interpolation.cs"
-    begin: "(?<=[^\\{])((?:\\{\\{)*)(\\{)(?=[^\\{])"
+    begin: "(?<=[^\\{]|^)((?:\\{\\{)*)(\\{)(?=[^\\{])"
     beginCaptures:
       "1":
         name: "string.quoted.double.cs"
@@ -2534,9 +2535,12 @@ repository:
         name: "invalid.illegal.newline.cs"
     patterns: [
       {
-        include: "#string-character-escape"
+        include: "#char-character-escape"
       }
     ]
+  "char-character-escape":
+    name: "constant.character.escape.cs"
+    match: "\\\\(['\"\\\\0abfnrtv]|x[0-9a-fA-F]{1,4}|u[0-9a-fA-F]{4})"
   "string-literal":
     name: "string.quoted.double.cs"
     begin: "(?<!@)\""
@@ -2556,7 +2560,7 @@ repository:
     ]
   "string-character-escape":
     name: "constant.character.escape.cs"
-    match: "\\\\."
+    match: "\\\\(['\"\\\\0abfnrtv]|x[0-9a-fA-F]{1,4}|U[0-9a-fA-F]{8}|u[0-9a-fA-F]{4})"
   "verbatim-string-literal":
     name: "string.quoted.double.cs"
     begin: "@\""
@@ -2718,15 +2722,15 @@ repository:
     match: '''
       (?x)
       (\\()\\s*
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2750,15 +2754,15 @@ repository:
     match: '''
       (?x)
       (?<!\\.)\\b(as)\\b\\s*
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2779,15 +2783,15 @@ repository:
     match: '''
       (?x)
       (?<!\\.)\\b(is)\\b\\s*
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2817,7 +2821,7 @@ repository:
       (?:(\\?)\\s*)?                                     # preceding null-conditional operator?
       (?:(\\.)\\s*)?                                     # preceding dot?
       (@?[_[:alpha:]][_[:alnum:]]*)\\s*                   # method name
-      (?<typeargs>\\s*<([^<>]|\\g<typeargs>)+>\\s*)?\\s* # type arguments
+      (?<type-args>\\s*<([^<>]|\\g<type-args>)+>\\s*)?\\s* # type arguments
       (?=\\()                                           # open paren of argument list
     '''
     beginCaptures:
@@ -2886,7 +2890,7 @@ repository:
           (?x)
           (\\.)?\\s*
           (@?[_[:alpha:]][_[:alnum:]]*)
-          (?<typeparams>\\s*<([^<>]|\\g<typeparams>)+>\\s*)
+          (?<type-params>\\s*<([^<>]|\\g<type-params>)+>\\s*)
           (?=
             (\\s*\\?)?
             \\s*\\.\\s*@?[_[:alpha:]][_[:alnum:]]*
@@ -2931,15 +2935,15 @@ repository:
     begin: '''
       (?x)
       (new)\\s+
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2967,15 +2971,15 @@ repository:
     match: '''
       (?x)
       (new)\\s+
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -2997,15 +3001,15 @@ repository:
     begin: '''
       (?x)
       \\b(new|stackalloc)\\b\\s*
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -3102,16 +3106,16 @@ repository:
     match: '''
       (?x)
       (?:(?:\\b(ref|params|out|in|this)\\b)\\s+)?
-      (?<typename>
+      (?<type-name>
         (?:
           (?:ref\\s+)?   # ref return
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -3130,7 +3134,7 @@ repository:
           }
         ]
       "7":
-        name: "variable.parameter.function.cs"
+        name: "entity.name.variable.parameter.cs"
   "argument-list":
     begin: "\\("
     beginCaptures:
@@ -3175,7 +3179,7 @@ repository:
     begin: "(@?[_[:alpha:]][_[:alnum:]]*)\\s*(:)"
     beginCaptures:
       "1":
-        name: "variable.parameter.function.cs"
+        name: "entity.name.variable.parameter.cs"
       "2":
         name: "punctuation.separator.colon.cs"
     end: "(?=(,|\\)|\\]))"
@@ -3201,15 +3205,15 @@ repository:
     begin: '''
       (?x)
       \\b(from)\\b\\s*
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -3306,15 +3310,15 @@ repository:
     begin: '''
       (?x)
       \\b(join)\\b\\s*
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -3466,7 +3470,7 @@ repository:
           "1":
             name: "storage.modifier.cs"
           "2":
-            name: "variable.parameter.function.cs"
+            name: "entity.name.variable.parameter.cs"
           "3":
             name: "keyword.operator.arrow.cs"
         end: "(?=\\)|;|}|,)"
@@ -3565,15 +3569,15 @@ repository:
     match: '''
       (?x)
       (?:\\b(ref|out|in)\\b)?\\s*
-      (?:(?<typename>
+      (?:(?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
@@ -3593,7 +3597,7 @@ repository:
           }
         ]
       "7":
-        name: "variable.parameter.function.cs"
+        name: "entity.name.variable.parameter.cs"
   type:
     name: "meta.type.cs"
     patterns: [
@@ -3651,22 +3655,22 @@ repository:
   "tuple-element":
     match: '''
       (?x)
-      (?<typename>
+      (?<type-name>
         (?:
           (?:
             (?:(?<identifier>@?[_[:alpha:]][_[:alnum:]]*)\\s*\\:\\:\\s*)? # alias-qualification
-            (?<nameandtypeargs> # identifier + type arguments (if any)
+            (?<name-and-type-args> # identifier + type arguments (if any)
               \\g<identifier>\\s*
-              (?<typeargs>\\s*<(?:[^<>]|\\g<typeargs>)+>\\s*)?
+              (?<type-args>\\s*<(?:[^<>]|\\g<type-args>)+>\\s*)?
             )
-            (?:\\s*\\.\\s*\\g<nameandtypeargs>)* | # Are there any more names being dotted into?
+            (?:\\s*\\.\\s*\\g<name-and-type-args>)* | # Are there any more names being dotted into?
             (?<tuple>\\s*\\((?:[^\\(\\)]|\\g<tuple>)+\\))
           )
           (?:\\s*\\?\\s*)? # nullable suffix?
           (?:\\s*\\[(?:\\s*,\\s*)*\\]\\s*)* # array suffix?
         )
       )
-      (?:(?<tuplename>\\g<identifier>)\\b)?
+      (?:(?<tuple-name>\\g<identifier>)\\b)?
     '''
     captures:
       "1":
@@ -3709,7 +3713,7 @@ repository:
             name: "storage.type.cs"
       }
       {
-        name: "entity.name.type.cs"
+        name: "storage.type.cs"
         match: "@?[_[:alpha:]][_[:alnum:]]*"
       }
     ]
